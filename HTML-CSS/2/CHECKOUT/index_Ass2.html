@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales and Marketing</title>
+    <link rel="stylesheet" href="styling.css">
+</head>
+<body>
+    <header>
+        <nav class="headers">
+            <div class="logo">
+                <img src="./assets/logo.png" alt="logo" width="45px">
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>Home</li>
+                    <li>Shop</li>
+                    <li>Contact</li>
+                    <li>Help</li>
+                </ul>
+            </div>
+            <div class="accounts_menu">
+                <label for="account_head">Account</label>
+                <select id="auth" name="cars">
+                    <option value="none"></option>
+                    <option value="signup">Signup</option>
+                    <option value="login">Login</option>
+                </select>
+            </div>
+            <div class="no_items">
+                <img src="./assets/padlock.png" alt="padlock" width="20px" height="20px">
+                <p><strong>3 items</strong></p>
+            </div>
+            <div class="profile-photo">
+                <img src="./assets/profile.png" alt="profile photo" width="50px">
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="accounts_container">
+            <nav>
+                <p style="color: rgb(48, 149, 243);">Account </p>
+                <img src="./assets/remove.png" alt="dash" width="35px">
+                <img src="./assets/check.png" alt="verified" width="15px" height="15px" style="">
+                <img src="./assets/remove.png" alt="dash" width="35px">
+                <p>Shipping</p>
+                <img src="./assets/remove.png" alt="dash" width="35px">
+                <img src="./assets/check.png" alt="verified" width="15px" height="15px">
+                <img src="./assets/remove.png" alt="dash" width="35px">
+                <p>Payment</p>
+            </nav>
+            <h3 id="acc-det">Account details</h3>
+            <div class="form">
+                <form action="#">
+                    <label  for="email_address">Email Address</label><br>
+                    <input id="email" type="email" placeholder="Email@myemail.com">
+                    <br>
+                    <label  for="password">Password</label><br>
+                    <input id="pswd" type="password" placeholder="........">
+                
+                    <div class="auth_group">
+                        <p id="register">Register for account</p>
+                        <button id="btn-register">Login</button>
+                    </div>
+                    <hr>
+                    <div class="ship_order_group">
+                        <p id="cancel">Cancel order</p>
+                        <button id="btn-shipping">Shipping details</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+        <div class="order_container">
+            <h3>Order Summary</h3>
+            <img src="./assets/sonyHeadphones.png" alt="sonyHeadphones">
+            <div class="name_num">
+                <h3>Sony wireless headphones</h3>
+                <button id="minus">-</button>
+                <h3>1</h3>
+                <button id="plus">+</button>
+            </div>
+            <h2>$320.45</h2>
+            <p>Gift Card / Discount Code</p>
+            <div id="g1">
+                <input type="text">
+                <button>Apply</button>
+            </div>
+            <div id="g2">
+                <p>Sub total</p>
+                <p><strong>$316.55</strong></p>
+            </div>
+            <div id="g3">
+                <p>Tax</p>
+                <p><strong>$3.45</strong></p>
+            </div>
+            <div id="g4">
+                <p>Shipping</p>
+                <p style="color: rgb(48, 149, 243);">Free</p>
+            </div>
+            <div id="g5">
+                <p><strong>Total</strong></p>
+                <p><strong>$320.45</strong></p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
