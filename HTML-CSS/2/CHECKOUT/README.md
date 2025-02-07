@@ -1,0 +1,1 @@
+![checkout-image](webpage.png)
