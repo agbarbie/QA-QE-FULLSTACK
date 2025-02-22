@@ -1,0 +1,19 @@
+{
+  "name": "guided_project",
+  "version": "1.0.0",
+  "main": "practice5.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon practice5.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "json-server": "^1.0.0-beta.3",
+    "nodemon": "^3.1.9"
+  }
+}
