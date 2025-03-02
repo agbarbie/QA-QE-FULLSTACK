@@ -1,0 +1,72 @@
+EcommerceTS/
+├── src/
+│   ├── index.ts
+│   ├── cart.ts
+│   └── products.ts
+├── dist/
+├── index.html
+├── tsconfig.json
+├── vite.config.js
+└── package.json
+
+
+
+//initialize the project 
+create folder ecommerceTS and right click on it and open terminal 
+
+2: set up package json 
+npm init -y 
+
+3: install typescript and nodemon 
+npm install --save-dev typescript nodemon
+
+4: create tsconfig 
+npx tsc --init
+
+5: Modify tsconfig.json to output compiled JavaScript into dist/:
+
+
+6: we will use vite to serve our app 
+
+//add this to vite config
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  root: './',
+  build: {
+    outDir: 'dist',
+  },
+  server: {
+    open: true
+  }
+});
+
+
+7:install vite  
+npm install --save-dev vite
+pnpm  install --save-dev vite
+
+8: Install and use a development server that handles ES modules correctly. Add this to your package.json:
+{
+  "name": "ecommercets",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "serve": "vite",
+    "build": "tsc",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "typescript": "^5.7.3",
+    "vite": "^5.0.0"
+  }
+}
+
+
+//lastly write your code and build it to run 
+1: npm run build to generate dist folder  
+2: server the app with vite 
+pnpm run serve
