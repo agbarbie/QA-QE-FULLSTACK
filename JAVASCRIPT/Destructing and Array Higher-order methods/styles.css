@@ -1,0 +1,63 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f2f5;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.container {
+    max-width: 600px;
+    width: 100%;
+}
+header {
+    text-align: center;
+    background: #152A36;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+.profile-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+.address-container {
+    display: flex;
+    flex-direction: column; 
+    gap: 15px;
+}
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+h2, h3 {
+    color: #152A36;
+    margin-bottom: 8px;
+}
+.transactions ul {
+    list-style:none;
+    padding: 0;
+}
+.transactions li {
+    background: #e3f2fd;
+    padding: 12px;
+    margin-top: 6px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+.transactions li:hover {
+    background: #bbdefb;
+}
