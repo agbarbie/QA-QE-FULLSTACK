@@ -1,29 +1,22 @@
 import express, { Request, Response, NextFunction } from "express";
 import dotenv from 'dotenv';
-import { readFileSync } from "fs";
 import path from 'path';
 import cors from "cors";
+import pool from "./db.config";
 
 dotenv.config();
 
 const app = express();
+app.use(express.json()); // Add this to parse JSON request bodies
+app.use(cors());
 
 // Load the variables
 const port = process.env.PORT || 3000;
 const secret = process.env.SECRET;
 console.log("Server port:", port);
 
-app.use(cors());
-
 // Get the current directory 
 const _dirname = path.resolve();
-
-// Synchronously read the file
-const booksData = readFileSync(
-    path.join(_dirname, "src", "db", "eventsData.json"), "utf-8"
-);
-const books = JSON.parse(booksData).books;
-console.log("Loaded books:", books.length);
 
 // Middleware to log requests for debugging
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -32,73 +25,166 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// Now, let's create a GET API route that filters events based on query parameters
-app.get('/api/books', (req: Request, res: Response) => {
+// Get all books with optional filtering
+app.get('/api/books', async(req: Request, res: Response) => {
   try {
-    console.log("Received filter request with query:", req.query);
     const { genre, year, pages, sort } = req.query;
-    let filteredBooks = [...books]; // Start with full data
+    let query = "SELECT * FROM public.books";
+    const queryParams: any[] = [];
+    let conditions = [];
     
-    // Filtering logic
+    // Build WHERE clause with filters
     if (genre && typeof genre === 'string') {
-      console.log(`Filtering by genre: ${genre}`);
-      filteredBooks = filteredBooks.filter((book) =>
-        book.genre.toLowerCase() === genre.toLowerCase()
-      );
-      console.log(`After genre filter: ${filteredBooks.length} books`);
-    }
-    
-    if (pages && typeof pages === 'string') {
-      const minPages = parseInt(pages);
-      console.log(`Filtering by min pages: ${minPages}`);
-      
-      if (!isNaN(minPages)) {
-        filteredBooks = filteredBooks.filter((book) => book.pages >= minPages);
-        console.log(`After pages filter: ${filteredBooks.length} books`);
-      }
+      queryParams.push(genre.toLowerCase());
+      conditions.push(`LOWER(genre) = LOWER($${queryParams.length})`);
     }
     
     if (year && typeof year === 'string') {
       const publishYear = parseInt(year);
-      console.log(`Filtering by year: ${publishYear}`);
-      
       if (!isNaN(publishYear)) {
-        filteredBooks = filteredBooks.filter((book) => book.year >= publishYear);
-        console.log(`After year filter: ${filteredBooks.length} books`);
+        queryParams.push(publishYear);
+        conditions.push(`year >= $${queryParams.length}`);
       }
     }
     
-    // Sorting logic
+    if (pages && typeof pages === 'string') {
+      const minPages = parseInt(pages);
+      if (!isNaN(minPages)) {
+        queryParams.push(minPages);
+        conditions.push(`pages >= $${queryParams.length}`);
+      }
+    }
+    
+    // Add WHERE clause if any conditions exist
+    if (conditions.length > 0) {
+      query += " WHERE " + conditions.join(" AND ");
+    }
+    
+    // Add sorting
     if (sort && typeof sort === 'string') {
-      console.log(`Sorting by: ${sort}`);
-      
       switch(sort) {
         case 'title':
-          filteredBooks.sort((a, b) => a.title.localeCompare(b.title));
+          query += " ORDER BY title ASC";
           break;
         case 'author':
-          filteredBooks.sort((a, b) => a.author.localeCompare(b.author));
+          query += " ORDER BY author ASC";
           break;
         case 'year':
-          filteredBooks.sort((a, b) => a.year - b.year);
+          query += " ORDER BY year ASC";
           break;
         case 'pages':
-          filteredBooks.sort((a, b) => a.pages - b.pages);
+          query += " ORDER BY pages ASC";
           break;
+        default:
+          query += " ORDER BY id ASC";
       }
+    } else {
+      query += " ORDER BY id ASC";
     }
     
-    console.log(`Returning ${filteredBooks.length} books`);
-    res.json(filteredBooks);
+    console.log("Executing query:", query, queryParams);
+    const result = await pool.query(query, queryParams);
+    res.status(200).json(result.rows);
   } catch (error) {
-    console.error("Error filtering books:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Error getting books:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
-// Basic route to return all books
+// Get single book
+app.get('/api/books/:id', async(req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query("SELECT * FROM public.books WHERE id = $1", [id]);
+    
+    if (result.rows.length === 0) {
+      res.status(404).json({ message: "Book not found" });
+      return;
+    }
+    
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error("Error getting book:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Create a new book
+app.post('/api/books', async (req: Request, res: Response) => {
+  try {
+    const { id, title, author, genre, year, publisher, pages, price, description } = req.body;
+    
+    // Check if the book with this id already exists
+    const bookCheck = await pool.query("SELECT id FROM books WHERE id = $1", [id]);
+    
+    if (bookCheck.rows.length > 0) {
+      res.status(400).json({
+        message: "Book already exists"
+      });
+      return;
+    }
+    
+    // Insert the book
+    const booksResult = await pool.query(
+      "INSERT INTO books(id, title, author, genre, year, publisher, pages, price, description) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *", 
+      [id, title, author, genre, year, publisher, pages, price, description]
+    );
+    
+    res.status(201).json({
+      message: "Book successfully created",
+      book: booksResult.rows[0]
+    });
+  } catch (error) {
+    console.error("Error creating book:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Update: Modify an existing book
+app.put('/api/books/:id', async(req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { title, author, genre, year, publisher, pages, price, description } = req.body;
+
+    const checkBook = await pool.query("SELECT * FROM public.books WHERE id = $1", [id]);
+    if (checkBook.rows.length === 0) {
+      res.status(404).json({ message: "Book not found" });
+      return;
+    } 
+    
+    const result = await pool.query(
+      "UPDATE books SET title = $1, author = $2, genre = $3, year = $4, publisher = $5, pages = $6, price = $7, description = $8, updated_at = NOW() WHERE id = $9 RETURNING *",
+      [title, author, genre, year, publisher, pages, price, description, id]
+    );
+    
+    res.json({ message: "Book updated", book: result.rows[0] });
+  } catch (error) {
+    console.error("Error updating book:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Delete: Remove a book
+app.delete('/api/books/:id', async(req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query("DELETE FROM public.books WHERE id = $1 RETURNING *", [id]);
+    
+    if (result.rows.length === 0) {
+      res.status(404).json({ message: "Book not found" });
+      return;
+    } 
+    
+    res.json({ message: "Book deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting book:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Basic route to check if server is running
 app.get('/', (req, res) => {
-  res.json(books);
+  res.json({ message: "Book API server is running" });
 });
 
 // Create server 

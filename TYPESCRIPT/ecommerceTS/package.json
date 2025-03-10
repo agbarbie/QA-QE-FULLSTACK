@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "ecommercets",
   "version": "1.0.0",
@@ -14,4 +15,22 @@
     "typescript": "^5.7.3",
     "vite": "^5.0.0"
   }
+=======
+{
+  "name": "ecommercets",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "serve": "vite",
+    "build": "tsc",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "typescript": "^5.7.3",
+    "vite": "^5.0.0"
+  }
+>>>>>>> 41d7ab369c9e98849911c632695ea5c1838075e5
 }
