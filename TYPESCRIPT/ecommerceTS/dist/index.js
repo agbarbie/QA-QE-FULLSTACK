@@ -40,17 +40,10 @@ function fetchProducts() {
             }
             catch (error) {
                 console.error("Error fetching books:", error);
-<<<<<<< HEAD
                 productList.innerHTML = `
           <div class="error-message">
               <p>Failed to load books. Please try again later.</p>
               <button onclick="fetchProducts()">Retry</button>
-=======
-                productList.innerHTML = `
-          <div class="error-message">
-              <p>Failed to load books. Please try again later.</p>
-              <button onclick="fetchProducts()">Retry</button>
->>>>>>> 41d7ab369c9e98849911c632695ea5c1838075e5
           </div>`;
             }
         }
@@ -64,17 +57,10 @@ function displayBooks(books) {
     }
     productList.innerHTML = "";
     if (!books || books.length === 0) {
-<<<<<<< HEAD
         productList.innerHTML = `
             <div class="no-results">
                 <p>No books found. Try adjusting your filters.</p>
                 <button onclick="resetFilters()">Reset Filters</button>
-=======
-        productList.innerHTML = `
-            <div class="no-results">
-                <p>No books found. Try adjusting your filters.</p>
-                <button onclick="resetFilters()">Reset Filters</button>
->>>>>>> 41d7ab369c9e98849911c632695ea5c1838075e5
             </div>`;
         return;
     }
@@ -85,7 +71,6 @@ function displayBooks(books) {
         const warningMessage = book.pages > 500
             ? `<div class="warning-badge">Long Read: ${book.pages} pages</div>`
             : "";
-<<<<<<< HEAD
         productDiv.innerHTML = `
           <div class="book-image">
               <img src="${book.image}" alt="${book.title}" 
@@ -104,26 +89,6 @@ function displayBooks(books) {
                   <button class="buy">Buy Now</button>
               </div>
           </div>
-=======
-        productDiv.innerHTML = `
-          <div class="book-image">
-              <img src="${book.image}" alt="${book.title}" 
-                   onerror="this.src='placeholder-book.jpg'">
-              ${warningMessage}
-          </div>
-          <div class="book-details">
-              <h2>${book.title}</h2>
-              <p class="author">by ${book.author}</p>
-              <span class="genre">${book.genre}</span>
-              <div class="book-metadata">
-                  <p><span>Published:</span> ${book.year}</p>
-                  <p><span>Pages:</span> ${book.pages}</p>
-                  <p><span>Publisher:</span> ${book.publisher}</p>
-                  <p><span>Price:</span> ${book.price}</p>
-                  <button class="buy">Buy Now</button>
-              </div>
-          </div>
->>>>>>> 41d7ab369c9e98849911c632695ea5c1838075e5
       `;
         if (productList) {
             productList.appendChild(productDiv);
@@ -260,7 +225,6 @@ function updateCartDisplay() {
         total += itemTotal;
         const cartItemElement = document.createElement('div');
         cartItemElement.classList.add('cart-item');
-<<<<<<< HEAD
         cartItemElement.innerHTML = `
             <div class="cart-item-content">
                 <img src="${item.image}" alt="${item.title}" class="cart-item-image">
@@ -278,25 +242,6 @@ function updateCartDisplay() {
                     <i class="fa-solid fa-trash"></i>
                 </button>
             </div>
-=======
-        cartItemElement.innerHTML = `
-            <div class="cart-item-content">
-                <img src="${item.image}" alt="${item.title}" class="cart-item-image">
-                <div class="cart-item-details">
-                    <h3>${item.title}</h3>
-                    <p>by ${item.author}</p>
-                    <div class="cart-item-price">$${price.toFixed(2)}</div>
-                </div>
-            </div>
-            <div class="cart-item-actions">
-                <button class="quantity-btn minus" data-id="${item.id}">-</button>
-                <span class="quantity">${item.quantity}</span>
-                <button class="quantity-btn plus" data-id="${item.id}">+</button>
-                <button class="remove-btn" data-id="${item.id}">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-            </div>
->>>>>>> 41d7ab369c9e98849911c632695ea5c1838075e5
         `;
         cartItemsContainer.appendChild(cartItemElement);
     });
