@@ -94,7 +94,7 @@ app.get('/api/books', async(req: Request, res: Response) => {
 // Get single book
 app.get('/api/books/:id', async(req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params; 
     const result = await pool.query("SELECT * FROM public.books WHERE id = $1", [id]);
     
     if (result.rows.length === 0) {
