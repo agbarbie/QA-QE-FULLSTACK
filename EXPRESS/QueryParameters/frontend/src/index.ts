@@ -63,31 +63,35 @@ const displayBooks = (books: Book[]) => {
         <p><span>Pages:</span> ${book.pages}</p>
         <p><span>Publisher:</span> ${book.publisher}</p>
         <p><span>Price:</span> ${book.price}</p>
-        <button class="buy">Buy Now</button>
+        <button class="buy" data-id="${book.id}">Buy Now</button>
       </div>
     </div>
   `
     )
     .join("");
+    
+  // Add event listeners to buy buttons after displaying books
+  addBuyButtonListeners(books);
 };
 
-// Add event listener for buy buttons
-const addBuyButtonListeners = () => {
+// Add event listener for buy buttons - FIXED: Pass books array to maintain reference
+const addBuyButtonListeners = (books: Book[]) => {
   const buyButtons = document.querySelectorAll('.buy');
-  buyButtons.forEach((button, index) => {
+  buyButtons.forEach((button) => {
     button.addEventListener('click', () => {
-      addToCart(index);
+      const bookId = Number((button as HTMLElement).getAttribute('data-id'));
+      // Find the book by ID instead of index
+      const bookIndex = books.findIndex(book => book.id === bookId);
+      if (bookIndex !== -1) {
+        addToCart(books[bookIndex]);
+      }
     });
   });
 };
 
-// Function to add a book to cart
-const addToCart = async (bookIndex: number) => {
+// Function to add a book to cart - FIXED: Take direct book object instead of index
+const addToCart = (selectedBook: Book) => {
   try {
-    // Get current books data
-    const books = await fetchBooks(handleFilter());
-    const selectedBook = books[bookIndex];
-    
     if (!selectedBook) {
       console.error("Book not found");
       return;
@@ -106,6 +110,8 @@ const addToCart = async (bookIndex: number) => {
         quantity: 1
       });
     }
+    
+    console.log("Cart updated:", cartItems);
     
     // Update cart UI
     updateCartCount();
@@ -127,29 +133,49 @@ const updateCartCount = () => {
   if (cartCount) {
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     cartCount.textContent = totalItems.toString();
+    console.log("Updated cart count:", totalItems);
+  } else {
+    console.warn("Cart count element not found");
   }
 };
 
-// Function to update cart items display
+// Function to update cart items display - FIXED: Better error handling
 const updateCartItems = () => {
   const cartItemsContainer = document.querySelector('.cart-items');
-  if (!cartItemsContainer) return;
   
-  if (cartItems.length === 0) {
+  if (!cartItemsContainer) {
+    console.error("Cart container not found!");
+    return;
+  }
+
+  console.log("Updating cart items, current items:", cartItems);
+
+  if (!Array.isArray(cartItems) || cartItems.length === 0) {
     cartItemsContainer.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
     updateCartTotal(0);
     return;
   }
-  
+
   let totalPrice = 0;
-  
+
   cartItemsContainer.innerHTML = cartItems
     .map(item => {
-      // Convert price from string (e.g., "$12.99") to number for calculation
+      // Check if the item is valid
+      if (!item || !item.id || !item.title || !item.author) {
+        console.error("Invalid item in cart:", item);
+        return '';
+      }
+
+      if (!item.price) {
+        console.error("Item price is missing", item);
+        return '';
+      }
+
+      // Properly parse the price string to get a number
       const priceValue = parseFloat(item.price.replace(/[^0-9.]/g, ''));
       const itemTotal = priceValue * item.quantity;
       totalPrice += itemTotal;
-      
+
       return `
         <div class="cart-item" data-id="${item.id}">
           <div class="cart-item-info">
@@ -163,24 +189,25 @@ const updateCartItems = () => {
               <span class="item-quantity">${item.quantity}</span>
               <button class="increase-quantity">+</button>
             </div>
-            <button class="remove-item">
-              <i class="fa-solid fa-trash"></i>
-            </button>
+            <button class="remove-item">Remove</button>
           </div>
         </div>
       `;
     })
     .join('');
-    
-  // Add event listeners to the cart item buttons
-  addCartItemEventListeners();
+
+  console.log("Cart HTML updated");
   
-  // Update the total price
+  // After updating the DOM, reattach event listeners
+  addCartItemEventListeners();
+
   updateCartTotal(totalPrice);
 };
 
 // Function to add event listeners to cart item buttons
 const addCartItemEventListeners = () => {
+  console.log("Adding cart item event listeners");
+  
   // Increase quantity buttons
   document.querySelectorAll('.increase-quantity').forEach(button => {
     button.addEventListener('click', (e) => {
@@ -217,6 +244,7 @@ const addCartItemEventListeners = () => {
 
 // Function to increase item quantity
 const increaseQuantity = (itemId: number) => {
+  console.log("Increasing quantity for item:", itemId);
   const itemIndex = cartItems.findIndex(item => item.id === itemId);
   if (itemIndex > -1) {
     cartItems[itemIndex].quantity += 1;
@@ -227,6 +255,7 @@ const increaseQuantity = (itemId: number) => {
 
 // Function to decrease item quantity
 const decreaseQuantity = (itemId: number) => {
+  console.log("Decreasing quantity for item:", itemId);
   const itemIndex = cartItems.findIndex(item => item.id === itemId);
   if (itemIndex > -1) {
     if (cartItems[itemIndex].quantity > 1) {
@@ -242,6 +271,7 @@ const decreaseQuantity = (itemId: number) => {
 
 // Function to remove an item from cart
 const removeFromCart = (itemId: number) => {
+  console.log("Removing item from cart:", itemId);
   cartItems = cartItems.filter(item => item.id !== itemId);
   updateCartItems();
   updateCartCount();
@@ -252,6 +282,9 @@ const updateCartTotal = (total: number) => {
   const cartTotal = document.querySelector('.cart-total span:last-child');
   if (cartTotal) {
     cartTotal.textContent = `$${total.toFixed(2)}`;
+    console.log("Updated cart total:", total);
+  } else {
+    console.warn("Cart total element not found");
   }
 };
 
@@ -284,6 +317,9 @@ const openCart = () => {
     cartDiv.classList.add('open');
     cartOverlay.classList.add('show');
     isCartOpen = true;
+    console.log("Cart opened");
+  } else {
+    console.warn("Cart elements not found");
   }
 };
 
@@ -296,15 +332,16 @@ const closeCart = () => {
     cartDiv.classList.remove('open');
     cartOverlay.classList.remove('show');
     isCartOpen = false;
+    console.log("Cart closed");
   }
 };
 
 function handleFilter(): Record<string, string> {
   const params: Record<string, string> = {};
-  const selectedGenre = (document.getElementById("search") as HTMLInputElement).value;
-  const publishYear = (document.getElementById("year") as HTMLInputElement).value;
-  const pagesNumber = (document.getElementById("minPages") as HTMLInputElement).value;
-  const sortBy = (document.getElementById("sort") as HTMLInputElement).value;
+  const selectedGenre = (document.getElementById("search") as HTMLInputElement)?.value;
+  const publishYear = (document.getElementById("year") as HTMLInputElement)?.value;
+  const pagesNumber = (document.getElementById("minPages") as HTMLInputElement)?.value;
+  const sortBy = (document.getElementById("sort") as HTMLInputElement)?.value;
   
   if(selectedGenre) {
     params.genre = selectedGenre;
@@ -323,57 +360,64 @@ function handleFilter(): Record<string, string> {
   return params;
 }
 
-// Fetch and display events on page load
+// Fetch and display books on page load
 const loadBooks = async () => {
   const books = await fetchBooks();
-  console.log(books);
+  console.log("Loaded books:", books);
   displayBooks(books);
-  addBuyButtonListeners(); // Add event listeners to buy buttons
 };
 
-// Load all events initially
-loadBooks();
-
-// Cart icon click event to toggle cart
-document.querySelector('.cart-icon-container')?.addEventListener('click', () => {
-  if (isCartOpen) {
-    closeCart();
-  } else {
-    openCart();
-  }
-});
-
-// Close cart button event
-document.querySelector('.close-cart')?.addEventListener('click', closeCart);
-
-// Cart overlay click to close cart
-document.querySelector('.cart-overlay')?.addEventListener('click', closeCart);
-
-// Checkout button event
-document.querySelector('.checkout-btn')?.addEventListener('click', () => {
-  if (cartItems.length === 0) {
-    showToast('Your cart is empty!');
-    return;
-  }
+// Initialize the cart and event listeners when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("DOM loaded, initializing cart");
   
-  // In a real application, this would redirect to checkout page
-  showToast('Proceeding to checkout...');
+  // Initialize empty cart
+  updateCartItems();
+  updateCartCount();
   
-  // For demo purposes, just clear the cart
-  setTimeout(() => {
-    cartItems = [];
-    updateCartItems();
-    updateCartCount();
-    closeCart();
-    showToast('Thank you for your purchase!');
-  }, 1500);
-});
-
-// Search button event
-document.getElementById("searchBtn")?.addEventListener("click", async () => {
-  const filterParams = handleFilter();
-  console.log("Filter params:", filterParams);
-  const filteredBooks = await fetchBooks(filterParams);
-  displayBooks(filteredBooks);
-  addBuyButtonListeners(); // Add event listeners to buy buttons
+  // Load all books initially
+  loadBooks();
+  
+  // Set up cart toggle functionality
+  document.querySelector('.cart-icon-container')?.addEventListener('click', () => {
+    if (isCartOpen) {
+      closeCart();
+    } else {
+      openCart();
+    }
+  });
+  
+  // Close cart button event
+  document.querySelector('.close-cart')?.addEventListener('click', closeCart);
+  
+  // Cart overlay click to close cart
+  document.querySelector('.cart-overlay')?.addEventListener('click', closeCart);
+  
+  // Checkout button event
+  document.querySelector('.checkout-btn')?.addEventListener('click', () => {
+    if (cartItems.length === 0) {
+      showToast('Your cart is empty!');
+      return;
+    }
+    
+    // In a real application, this would redirect to checkout page
+    showToast('Proceeding to checkout...');
+    
+    // For demo purposes, just clear the cart
+    setTimeout(() => {
+      cartItems = [];
+      updateCartItems();
+      updateCartCount();
+      closeCart();
+      showToast('Thank you for your purchase!');
+    }, 1500);
+  });
+  
+  // Search button event
+  document.getElementById("searchBtn")?.addEventListener("click", async () => {
+    const filterParams = handleFilter();
+    console.log("Filter params:", filterParams);
+    const filteredBooks = await fetchBooks(filterParams);
+    displayBooks(filteredBooks);
+  });
 });
