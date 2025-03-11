@@ -44,6 +44,23 @@
 
       <button id="sortOrderBtn">Toggle Sort Order</button>
       <button id="searchBtn">Search</button>
+
+      <div id="post-form-container">
+        <button type="button" id="toggle-form-button">Add Book</button>
+        <form id="post-form" action="/api/books" method="post">
+            <input type="number" name="id" placeholder="Id" />
+            <input type="text" name="title" placeholder="Title" />
+            <input type="text" name="author" placeholder="Author" />
+            <input type="text" name="genre" placeholder="Genre" />
+            <input type="number" name="year" placeholder="Year" />
+            <input type="number" name="pages" placeholder="Pages" />
+            <input type="text" name="publisher" placeholder="Publisher" />
+            <textarea name="description" placeholder="Description"></textarea>
+            <input type="text" name="image" placeholder="Image URL" />
+            <input type="number" name="price" placeholder="Price" step="0.01" />
+            <button type="submit">Submit</button>
+        </form>
+    </div>
     </div>
 
     <div id="product-list"></div>

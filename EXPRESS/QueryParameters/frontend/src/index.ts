@@ -421,3 +421,24 @@ document.addEventListener('DOMContentLoaded', () => {
     displayBooks(filteredBooks);
   });
 });
+// Select the button element by ID
+const toggleFormButton = document.getElementById('toggle-form-button') as HTMLButtonElement;
+
+// Select the form element by ID
+const form = document.getElementById('post-form') as HTMLFormElement;
+
+// Ensure the form is initially hidden
+if (form) {
+  form.style.display = 'none'; // Ensure form is hidden by default
+}
+
+// Add an event listener to toggle form visibility
+toggleFormButton?.addEventListener('click', () => {
+  // Toggle form visibility when the button is clicked
+  if (form.style.display === 'block') {
+    form.style.display = 'none';
+  } else {
+    form.style.display = 'block';
+  }
+});
+

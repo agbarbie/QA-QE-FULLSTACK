@@ -29,7 +29,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.get('/api/books', async(req: Request, res: Response) => {
   try {
     const { genre, year, pages, sort } = req.query;
-    let query = "SELECT * FROM public.books";
+    let query = "SELECT * FROM public.mybooks";
     const queryParams: any[] = [];
     let conditions = [];
     
@@ -94,8 +94,8 @@ app.get('/api/books', async(req: Request, res: Response) => {
 // Get single book
 app.get('/api/books/:id', async(req: Request, res: Response) => {
   try {
-    const { id } = req.params; 
-    const result = await pool.query("SELECT * FROM public.books WHERE id = $1", [id]);
+    const { id } = req.params;
+    const result = await pool.query("SELECT * FROM public.mybooks WHERE id = $1", [id]);
     
     if (result.rows.length === 0) {
       res.status(404).json({ message: "Book not found" });
@@ -112,10 +112,10 @@ app.get('/api/books/:id', async(req: Request, res: Response) => {
 // Create a new book
 app.post('/api/books', async (req: Request, res: Response) => {
   try {
-    const { id, title, author, genre, year, publisher, pages, price, description } = req.body;
+    const { id, title, author, genre, year, publisher, pages, price, description, created_by } = req.body;
     
     // Check if the book with this id already exists
-    const bookCheck = await pool.query("SELECT id FROM books WHERE id = $1", [id]);
+    const bookCheck = await pool.query("SELECT id FROM mybooks WHERE id = $1", [id]);
     
     if (bookCheck.rows.length > 0) {
       res.status(400).json({
@@ -126,8 +126,8 @@ app.post('/api/books', async (req: Request, res: Response) => {
     
     // Insert the book
     const booksResult = await pool.query(
-      "INSERT INTO books(id, title, author, genre, year, publisher, pages, price, description) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *", 
-      [id, title, author, genre, year, publisher, pages, price, description]
+      "INSERT INTO mybooks(id, title, author, genre, year, publisher, pages, price, description, created_by) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *", 
+      [id, title, author, genre, year, publisher, pages, price, description, created_by]
     );
     
     res.status(201).json({
@@ -144,17 +144,17 @@ app.post('/api/books', async (req: Request, res: Response) => {
 app.put('/api/books/:id', async(req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { title, author, genre, year, publisher, pages, price, description } = req.body;
+    const { title, author, genre, year, publisher, pages, price, description, image } = req.body;
 
-    const checkBook = await pool.query("SELECT * FROM public.books WHERE id = $1", [id]);
+    const checkBook = await pool.query("SELECT * FROM public.mybooks WHERE id = $1", [id]);
     if (checkBook.rows.length === 0) {
       res.status(404).json({ message: "Book not found" });
       return;
     } 
     
     const result = await pool.query(
-      "UPDATE books SET title = $1, author = $2, genre = $3, year = $4, publisher = $5, pages = $6, price = $7, description = $8, updated_at = NOW() WHERE id = $9 RETURNING *",
-      [title, author, genre, year, publisher, pages, price, description, id]
+      "UPDATE mybooks SET title = $1, author = $2, genre = $3, year = $4, publisher = $5, pages = $6, price = $7, description = $8, image=$9, updated_at = NOW() WHERE id = $10 RETURNING *",
+      [title, author, genre, year, publisher, pages, price, description, image,id]
     );
     
     res.json({ message: "Book updated", book: result.rows[0] });
@@ -168,7 +168,7 @@ app.put('/api/books/:id', async(req: Request, res: Response) => {
 app.delete('/api/books/:id', async(req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const result = await pool.query("DELETE FROM public.books WHERE id = $1 RETURNING *", [id]);
+    const result = await pool.query("DELETE FROM public.mybooks WHERE id = $1 RETURNING *", [id]);
     
     if (result.rows.length === 0) {
       res.status(404).json({ message: "Book not found" });
