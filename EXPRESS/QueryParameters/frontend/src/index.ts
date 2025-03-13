@@ -19,11 +19,12 @@ type CartItem = Book & { quantity: number };
 // Initialize cart state
 let cartItems: CartItem[] = [];
 let isCartOpen = false;
+let currentEditingBook: Book | null = null;
 
 const fetchBooks = async (params: Record<string, string> = {}): Promise<Book[]> => {
   try {
     const queryParams = new URLSearchParams(params).toString();
-    const url = `http://localhost:3000/api/books${queryParams ? `?${queryParams}` : ""}`;
+    const url = `http://localhost:4000/api/books${queryParams ? `?${queryParams}` : ""}`;
     console.log("Fetching from URL:", url);
     
     const response = await fetch(url, {
@@ -53,28 +54,42 @@ const displayBooks = (books: Book[]) => {
   productList.innerHTML = books
     .map(
       (book) => `
-    <div class="book-details">
-      <img src=${book.image} alt=${book.title}/>
-      <h2>${book.title}</h2>
-      <p class="author">by ${book.author}</p>
-      <span class="genre">${book.genre}</span>
-      <div class="book-metadata">
-        <p><span>Published:</span> ${book.year}</p>
-        <p><span>Pages:</span> ${book.pages}</p>
-        <p><span>Publisher:</span> ${book.publisher}</p>
-        <p><span>Price:</span> ${book.price}</p>
-        <button class="buy" data-id="${book.id}">Buy Now</button>
-      </div>
+   <div class="book-card" data-id="${book.id}">
+  <div class="book-image-container">
+    <img src="${book.image}" alt="${book.title}" />
+    <div class="book-actions">
+      <button class="edit-book" data-id="${book.id}" title="Edit Book">
+        <i class="fas fa-edit"></i> Edit
+      </button>
+      <button class="delete-book" data-id="${book.id}" title="Delete Book">
+        <i class="fas fa-trash"></i> Delete
+      </button>
     </div>
+  </div>
+  <div class="book-details">
+    <h2>${book.title}</h2>
+    <p class="author">by ${book.author}</p>
+    <span class="genre">${book.genre}</span>
+    <div class="book-metadata">
+      <p><span>Published:</span> ${book.year}</p>
+      <p><span>Pages:</span> ${book.pages}</p>
+      <p><span>Publisher:</span> ${book.publisher}</p>
+      <p><span>Price:</span> ${book.price}</p>
+      <button class="buy" data-id="${book.id}">Buy Now</button>
+    </div>
+  </div>
+</div>
   `
     )
     .join("");
     
-  // Add event listeners to buy buttons after displaying books
+  // Add event listeners to buttons after displaying books
   addBuyButtonListeners(books);
+  addEditButtonListeners(books);
+  addDeleteButtonListeners(books);
 };
 
-// Add event listener for buy buttons - FIXED: Pass books array to maintain reference
+// Add event listener for buy buttons
 const addBuyButtonListeners = (books: Book[]) => {
   const buyButtons = document.querySelectorAll('.buy');
   buyButtons.forEach((button) => {
@@ -89,7 +104,146 @@ const addBuyButtonListeners = (books: Book[]) => {
   });
 };
 
-// Function to add a book to cart - FIXED: Take direct book object instead of index
+// Add event listeners for edit buttons
+const addEditButtonListeners = (books: Book[]) => {
+  const editButtons = document.querySelectorAll('.edit-book');
+  editButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent event bubbling
+      const bookId = Number((button as HTMLElement).getAttribute('data-id'));
+      const book = books.find(book => book.id === bookId);
+      if (book) {
+        openEditForm(book);
+      }
+    });
+  });
+};
+
+// Add event listeners for delete buttons
+const addDeleteButtonListeners = (books: Book[]) => {
+  const deleteButtons = document.querySelectorAll('.delete-book');
+  deleteButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent event bubbling
+      const bookId = Number((button as HTMLElement).getAttribute('data-id'));
+      if (confirm('Are you sure you want to delete this book?')) {
+        deleteBook(bookId);
+      }
+    });
+  });
+};
+
+// Function to delete a book
+const deleteBook = async (bookId: number) => {
+  try {
+    const response = await fetch(`http://localhost:4000/api/books/${bookId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete book: ${response.status}`);
+    }
+
+    // Reload books after successful deletion
+    showToast('Book deleted successfully!');
+    loadBooks();
+  } catch (error) {
+    console.error('Error deleting book:', error);
+    showToast('Failed to delete book. Please try again.');
+  }
+};
+
+// Function to open the edit form and populate it with book data
+const openEditForm = (book: Book) => {
+  currentEditingBook = book;
+  
+  // Get the edit form
+  const editForm = document.getElementById('edit-book-form') as HTMLFormElement;
+  const editFormContainer = document.getElementById('edit-form-container') as HTMLElement;
+  
+  if (!editForm || !editFormContainer) {
+    console.error('Edit form elements not found');
+    return;
+  }
+  
+  // Populate form fields with book data
+  const titleInput = editForm.querySelector('#edit-title') as HTMLInputElement;
+  const authorInput = editForm.querySelector('#edit-author') as HTMLInputElement;
+  const genreInput = editForm.querySelector('#edit-genre') as HTMLInputElement;
+  const yearInput = editForm.querySelector('#edit-year') as HTMLInputElement;
+  const pagesInput = editForm.querySelector('#edit-pages') as HTMLInputElement;
+  const publisherInput = editForm.querySelector('#edit-publisher') as HTMLInputElement;
+  const priceInput = editForm.querySelector('#edit-price') as HTMLInputElement;
+  const imageInput = editForm.querySelector('#edit-image') as HTMLInputElement;
+  
+  if (titleInput) titleInput.value = book.title;
+  if (authorInput) authorInput.value = book.author;
+  if (genreInput) genreInput.value = book.genre;
+  if (yearInput) yearInput.value = book.year.toString();
+  if (pagesInput) pagesInput.value = book.pages.toString();
+  if (publisherInput) publisherInput.value = book.publisher;
+  if (priceInput) priceInput.value = book.price;
+  if (imageInput) imageInput.value = book.image;
+  
+  // Show the form
+  editFormContainer.style.display = 'flex';
+};
+
+// Function to close the edit form
+const closeEditForm = () => {
+  const editFormContainer = document.getElementById('edit-form-container') as HTMLElement;
+  if (editFormContainer) {
+    editFormContainer.style.display = 'none';
+  }
+  currentEditingBook = null;
+};
+
+// Function to handle book update
+const updateBook = async (formData: FormData) => {
+  if (!currentEditingBook) {
+    console.error('No book selected for editing');
+    return;
+  }
+  
+  try {
+    const updatedBook = {
+      id: currentEditingBook.id,
+      title: formData.get('title') as string,
+      author: formData.get('author') as string,
+      genre: formData.get('genre') as string,
+      year: parseInt(formData.get('year') as string),
+      pages: parseInt(formData.get('pages') as string),
+      publisher: formData.get('publisher') as string,
+      price: formData.get('price') as string,
+      image: formData.get('image') as string,
+    };
+    
+    const response = await fetch(`http://localhost:4000/api/books/${currentEditingBook.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedBook),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to update book: ${response.status}`);
+    }
+    
+    // Close form and reload books after successful update
+    closeEditForm();
+    showToast('Book updated successfully!');
+    loadBooks();
+  } catch (error) {
+    console.error('Error updating book:', error);
+    showToast('Failed to update book. Please try again.');
+  }
+};
+
+// Function to add a book to cart
 const addToCart = (selectedBook: Book) => {
   try {
     if (!selectedBook) {
@@ -139,7 +293,7 @@ const updateCartCount = () => {
   }
 };
 
-// Function to update cart items display - FIXED: Better error handling
+// Function to update cart items display
 const updateCartItems = () => {
   const cartItemsContainer = document.querySelector('.cart-items');
   
@@ -371,6 +525,9 @@ const loadBooks = async () => {
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM loaded, initializing cart");
   
+  // Create edit form if it doesn't exist
+  createEditFormIfNeeded();
+  
   // Initialize empty cart
   updateCartItems();
   updateCartCount();
@@ -420,7 +577,78 @@ document.addEventListener('DOMContentLoaded', () => {
     const filteredBooks = await fetchBooks(filterParams);
     displayBooks(filteredBooks);
   });
+  
+  // Set up event listeners for the edit form
+  document.getElementById('edit-book-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    updateBook(formData);
+  });
+  
+  // Close form button event
+  document.getElementById('cancel-edit')?.addEventListener('click', () => {
+    closeEditForm();
+  });
 });
+
+// Function to create the edit form if it doesn't exist
+const createEditFormIfNeeded = () => {
+  if (!document.getElementById('edit-form-container')) {
+    // Create the form container
+    const formContainer = document.createElement('div');
+    formContainer.id = 'edit-form-container';
+    formContainer.className = 'modal-container';
+    formContainer.style.display = 'none';
+    
+    formContainer.innerHTML = `
+      <div class="modal-content">
+        <h2>Edit Book</h2>
+        <form id="edit-book-form">
+          <div class="form-group">
+            <label for="edit-title">Title:</label>
+            <input type="text" id="edit-title" name="title" required>
+          </div>
+          <div class="form-group">
+            <label for="edit-author">Author:</label>
+            <input type="text" id="edit-author" name="author" required>
+          </div>
+          <div class="form-group">
+            <label for="edit-genre">Genre:</label>
+            <input type="text" id="edit-genre" name="genre" required>
+          </div>
+          <div class="form-group">
+            <label for="edit-year">Year:</label>
+            <input type="number" id="edit-year" name="year" required>
+          </div>
+          <div class="form-group">
+            <label for="edit-pages">Pages:</label>
+            <input type="number" id="edit-pages" name="pages" required>
+          </div>
+          <div class="form-group">
+            <label for="edit-publisher">Publisher:</label>
+            <input type="text" id="edit-publisher" name="publisher" required>
+          </div>
+          <div class="form-group">
+            <label for="edit-price">Price:</label>
+            <input type="text" id="edit-price" name="price" required>
+          </div>
+          <div class="form-group">
+            <label for="edit-image">Image URL:</label>
+            <input type="text" id="edit-image" name="image" required>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Update Book</button>
+            <button type="button" id="cancel-edit">Cancel</button>
+          </div>
+        </form>
+      </div>
+    `;
+    
+    document.body.appendChild(formContainer);
+  }
+};
+
 // Select the button element by ID
 const toggleFormButton = document.getElementById('toggle-form-button') as HTMLButtonElement;
 
@@ -441,4 +669,3 @@ toggleFormButton?.addEventListener('click', () => {
     form.style.display = 'block';
   }
 });
-

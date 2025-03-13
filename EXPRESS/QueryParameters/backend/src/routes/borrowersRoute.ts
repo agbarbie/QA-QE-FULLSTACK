@@ -1,0 +1,14 @@
+import express from "express"
+import { createBorrower, deleteBorrower, getBorrowerById, getBorrower, updateBorrower } from "../controllers/borrowers"
+
+//instance of router 
+const router = express.Router()
+
+//create the routs
+router.post("/", createBorrower)
+router.get("/", getBorrower);
+router.get("/:borrower_id", getBorrowerById);
+router.put("/:borrower_id", updateBorrower);
+router.delete("/:borrower_id", deleteBorrower);
+
+export default router
