@@ -9,38 +9,38 @@ import asyncHandler from "@app/middlewares/asyncHandler";
 import { RoleRequest } from "@app/utils/types/user_RoleTypes";
 import { UserRequest } from "@app/utils/types/userTypes";
 export const registerUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const { name, email, password, role_id } = req.body
-
+    const { name, email, password, role_id } = req.body;
+    
     // Check if user exists
-    const userExists = await pool.query("SELECT id FROM users WHERE email = $1", [email]);
-
+    const userExists = await pool.query("SELECT email FROM users WHERE email = $1", [email]);
+    
     if (userExists.rows.length > 0) {
         res.status(400).json({ message: "User already exists" });
         return;
     }
-
-        //before inserting into users, we need to hash the passwords
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt)
-
-    //insert into user table 
+    
+    // Hash the password before inserting into users
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    
+    // Insert into user table
     const newUser = await pool.query(
-        "INSERT INTO users (name, email, password, role_id) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role_id",
+        "INSERT INTO users (name, email, password, role_id) VALUES ($1, $2, $3, $4) RETURNING *",
         [name, email, hashedPassword, role_id]
     );
-
-
-    //generate JWT token for user access 
-    generateToken(res, newUser.rows[0].id, newUser.rows[0].role_id)
-     
-
+    
+    // Generate JWT token for user access - FIXED: using user_id instead of id
+    generateToken(res, newUser.rows[0].user_id, newUser.rows[0].role_id);
+    
+    // Remove password from the returned user object for security
+    const userToReturn = { ...newUser.rows[0] };
+    delete userToReturn.password;
+    
     res.status(201).json({
         message: "User registered successfully",
-        user: newUser.rows[0]
+        user: userToReturn
     });
-
-    //next() - I will redirect automatically is successfully registered
-})
+});
 
 export const loginUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
 
