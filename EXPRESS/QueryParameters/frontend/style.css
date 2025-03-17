@@ -652,14 +652,15 @@ h1::after {
 
 #post-form {
   display: none;
-  position: absolute;
-  top: calc(100% + 1rem);
-  right: 0;
+  position: fixed; /* Use fixed positioning to ensure it appears above other elements */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for exact centering */
   background: var(--surface);
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: var(--card-shadow);
-  z-index: 1000;
+  z-index: 1000; /* Ensure a high z-index to appear above other elements */
   width: 300px;
   border: 1px solid var(--surface-light);
 }
@@ -831,3 +832,4 @@ h1::after {
   background-color: #f44336;
   color: white;
 }
+

@@ -1,6 +1,7 @@
-import { Request, Response } from "express"
+import { Request, Response } from "express";
 import pool from "../db/db.config"
-import asyncHandler from "../middlewares/asyncHandler"
+import asyncHandler from "../middlewares/asyncHandler";
+import { RoleRequest } from "../utils/types/user_RoleTypes";
 
 // Get all books with optional filtering
 export const getBooks = asyncHandler(  async(req: Request, res: Response) => {

@@ -1,5 +1,8 @@
+import { setupAliases } from "import-aliases";
+setupAliases();
+
 import express from "express"
-import { createUser, deleteUser, getUserById, getUsers, updateUsers } from "../controllers/userController"
+import { createUser, deleteUser, getUserById, getUsers, updateUsers } from "@app/controllers/userController"
 
 //instance of router 
 const router = express.Router()

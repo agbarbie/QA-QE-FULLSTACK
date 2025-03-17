@@ -1,5 +1,8 @@
+import { setupAliases } from "import-aliases";
+setupAliases();
+
 import express from "express"
-import {createUserRole,getUserRoleById,getUserRoles,updateUserRole,deleteUserRole} from "../controllers/user_roles"
+import {createUserRole,getUserRoleById,getUserRoles,updateUserRole,deleteUserRole} from "@app/controllers/user_roles"
 
 //instance of router 
 const router = express.Router()

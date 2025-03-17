@@ -1,12 +1,17 @@
+import { setupAliases } from "import-aliases";
+setupAliases();
+
 import express, { Request, Response, NextFunction } from "express";
 import dotenv from 'dotenv';
 import path from 'path';
 import cors from "cors";
-import pool from "./db/db.config";
-import userRoutes from "./routes/usersRoute";
-import bookRoutes from "./routes/booksRoute";
-import borrowerRoutes from "./routes/borrowersRoute";
-import user_roleRoutes from "./routes/userRoleRouter";
+import pool from "@app/db/db.config";
+
+import userRoutes from "@app/routes/usersRoute";
+import bookRoutes from "@app/routes/booksRoute";
+import borrowerRoutes from "@app/routes/borrowersRoute";
+import user_roleRoutes from "@app/routes/userRoleRouter";
+import authRoutes from "@app/routes/authRoutes";
 
 
 dotenv.config();

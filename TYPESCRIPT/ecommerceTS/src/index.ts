@@ -224,7 +224,7 @@ function updateCartDisplay(cartItems: BooksData):void{
 
     cartItems.forEach(item => {
       const price = parseFloat(String(item.price).replace('$', ''));
-      const itemTotal = price * item.quantity;
+      const itemTotal = price * (item.quantity ?? 1);
         total += itemTotal;
 
         const cartItemElement = document.createElement('div');
@@ -256,7 +256,7 @@ function updateCartDisplay(cartItems: BooksData):void{
 // Function to update cart count badge
 function updateCartCount():void {
     const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-    cartCount.textContent = totalItems;
+    cartCount.textContent = totalItems.toString();
 }
 
 // Local storage functions
@@ -275,35 +275,48 @@ function loadCartFromLocalStorage():void{
 
 // Event delegation for buy buttons
 productList.addEventListener('click', (e) => {
-    if (e.target.classList.contains('buy')) {
-        const bookCard = e.target.closest('.book-card');
+    const target = e.target as HTMLElement;
+    if (target && target.classList.contains('buy')) {
+        const target = e.target as HTMLElement;
+        if (!target) return;
+        const bookCard = target.closest('.book-card');
+        if (!bookCard) {
+            console.error("Book card element not found.");
+            return;
+        }
+        const imgElement = bookCard.querySelector('img');
+        if (!imgElement) {
+            console.error("Image element not found in book card.");
+            return;
+        }
         const bookData = {
             id: Date.now(), // Using timestamp as a simple unique ID
-            title: bookCard.querySelector('h2').textContent,
-            author: bookCard.querySelector('.author').textContent.replace('by ', ''),
-            image: bookCard.querySelector('img').src,
-            price: bookCard.querySelector('.book-metadata p:last-of-type').textContent.split('Price: ')[1]
+            title: bookCard.querySelector('h2')?.textContent || '',
+            author: bookCard.querySelector('.author')?.textContent?.replace('by ', '') ?? '',
+            image: imgElement.src,
+            price: bookCard.querySelector('.book-metadata p:last-of-type')?.textContent?.split('Price: ')[1] || ''
         };
         
-        addToCart(bookData);
+        addToCart(bookData.id);
         // Removed the automatic cart opening here
     }
 });
 
 // Event delegation for cart item actions
 cartItemsContainer.addEventListener('click', (e) => {
-    if (e.target.classList.contains('quantity-btn')) {
-        const bookId = parseInt(e.target.dataset.id);
+    const target = e.target as HTMLElement;
+    if (target && target.classList.contains('quantity-btn')) {
+        const bookId = parseInt(target.dataset.id || '0');
         const item = cartItems.find(item => item.id === bookId);
         if (item) {
-            if (e.target.classList.contains('plus')) {
-                updateQuantity(bookId, item.quantity + 1);
-            } else if (e.target.classList.contains('minus')) {
-                updateQuantity(bookId, item.quantity - 1);
+            if (target && target.classList.contains('plus')) {
+                updateQuantity(bookId, (item.quantity ?? 0) + 1);
+            } else if (target && target.classList.contains('minus')) {
+                updateQuantity(bookId, (item.quantity ?? 0) - 1);
             }
         }
-    } else if (e.target.classList.contains('remove-btn') || e.target.closest('.remove-btn')) {
-        const bookId = parseInt(e.target.closest('.remove-btn').dataset.id);
+    } else if (e.target && ((e.target as HTMLElement).classList.contains('remove-btn') || (e.target as HTMLElement).closest('.remove-btn'))) {
+        const bookId = parseInt((e.target as HTMLElement).closest('.remove-btn')?.dataset.id || '0');
         removeFromCart(bookId);
     }
 });
@@ -313,8 +326,12 @@ cartItemsContainer.addEventListener('click', (e) => {
 //     cartOverlay.classList.toggle('active');
 // }
 
-cartIcon.addEventListener('click', toggleCart);
-closeCart.addEventListener('click', toggleCart);
+if (cartIcon) {
+    cartIcon.addEventListener('click', toggleCart);
+}
+if (closeCart) {
+    closeCart.addEventListener('click', toggleCart);
+}
 cartOverlay.addEventListener('click', toggleCart);
 
 // Initialize cart from local storage on page load

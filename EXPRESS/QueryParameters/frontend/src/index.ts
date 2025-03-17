@@ -250,30 +250,30 @@ const addToCart = (selectedBook: Book) => {
       console.error("Book not found");
       return;
     }
-    
-    // Check if item already exists in cart
+
+    // Check if the item already exists in the cart
     const existingItemIndex = cartItems.findIndex(item => item.id === selectedBook.id);
-    
+
     if (existingItemIndex > -1) {
-      // Increment quantity if already in cart
+      // Increment quantity if the book is already in the cart
       cartItems[existingItemIndex].quantity += 1;
     } else {
-      // Add new item to cart with quantity 1
+      // Add the book to the cart with a quantity of 1
       cartItems.push({
         ...selectedBook,
-        quantity: 1
+        quantity: 1,
       });
     }
-    
+
     console.log("Cart updated:", cartItems);
-    
-    // Update cart UI
+
+    // Update the cart UI
     updateCartCount();
     updateCartItems();
-    
-    // Show confirmation to user
+
+    // Show a confirmation message to the user
     showToast(`${selectedBook.title} added to cart!`);
-    
+
     // Optionally open the cart
     openCart();
   } catch (error) {
@@ -281,11 +281,11 @@ const addToCart = (selectedBook: Book) => {
   }
 };
 
-// Function to update cart count display
+// Function to update the cart count display
 const updateCartCount = () => {
   const cartCount = document.querySelector('.cart-count');
   if (cartCount) {
-    const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+    const totalItems = cartItems.reduce((total, item) => total + (item.quantity || 0), 0);
     cartCount.textContent = totalItems.toString();
     console.log("Updated cart count:", totalItems);
   } else {
@@ -293,10 +293,10 @@ const updateCartCount = () => {
   }
 };
 
-// Function to update cart items display
+// Function to update the cart items display
 const updateCartItems = () => {
   const cartItemsContainer = document.querySelector('.cart-items');
-  
+
   if (!cartItemsContainer) {
     console.error("Cart container not found!");
     return;
@@ -325,9 +325,9 @@ const updateCartItems = () => {
         return '';
       }
 
-      // Properly parse the price string to get a number
+      // Parse the price string to get a number
       const priceValue = parseFloat(item.price.replace(/[^0-9.]/g, ''));
-      const itemTotal = priceValue * item.quantity;
+      const itemTotal = priceValue * (item.quantity || 1);
       totalPrice += itemTotal;
 
       return `
@@ -351,17 +351,18 @@ const updateCartItems = () => {
     .join('');
 
   console.log("Cart HTML updated");
-  
-  // After updating the DOM, reattach event listeners
+
+  // Reattach event listeners for cart item buttons
   addCartItemEventListeners();
 
+  // Update the cart total price
   updateCartTotal(totalPrice);
 };
 
 // Function to add event listeners to cart item buttons
 const addCartItemEventListeners = () => {
   console.log("Adding cart item event listeners");
-  
+
   // Increase quantity buttons
   document.querySelectorAll('.increase-quantity').forEach(button => {
     button.addEventListener('click', (e) => {
@@ -372,7 +373,7 @@ const addCartItemEventListeners = () => {
       }
     });
   });
-  
+
   // Decrease quantity buttons
   document.querySelectorAll('.decrease-quantity').forEach(button => {
     button.addEventListener('click', (e) => {
@@ -383,7 +384,7 @@ const addCartItemEventListeners = () => {
       }
     });
   });
-  
+
   // Remove item buttons
   document.querySelectorAll('.remove-item').forEach(button => {
     button.addEventListener('click', (e) => {
@@ -415,7 +416,7 @@ const decreaseQuantity = (itemId: number) => {
     if (cartItems[itemIndex].quantity > 1) {
       cartItems[itemIndex].quantity -= 1;
     } else {
-      // Remove item if quantity would be 0
+      // Remove the item if the quantity would be 0
       cartItems.splice(itemIndex, 1);
     }
     updateCartItems();
@@ -423,7 +424,7 @@ const decreaseQuantity = (itemId: number) => {
   }
 };
 
-// Function to remove an item from cart
+// Function to remove an item from the cart
 const removeFromCart = (itemId: number) => {
   console.log("Removing item from cart:", itemId);
   cartItems = cartItems.filter(item => item.id !== itemId);
@@ -649,23 +650,53 @@ const createEditFormIfNeeded = () => {
   }
 };
 
-// Select the button element by ID
-const toggleFormButton = document.getElementById('toggle-form-button') as HTMLButtonElement;
+document.addEventListener("DOMContentLoaded", () => {
+  const formContainer = document.getElementById("post-form-container") as HTMLDivElement;
+  const form = document.getElementById("post-form") as HTMLFormElement;
+  const toggleButton = document.getElementById("toggle-form-button") as HTMLButtonElement;
 
-// Select the form element by ID
-const form = document.getElementById('post-form') as HTMLFormElement;
+  // Toggle form visibility
+  toggleButton.addEventListener("click", () => {
+    form.style.display = form.style.display === "none" || form.style.display === "" ? "block" : "none";
+  });
 
-// Ensure the form is initially hidden
-if (form) {
-  form.style.display = 'none'; // Ensure form is hidden by default
-}
+  // Handle form submission
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-// Add an event listener to toggle form visibility
-toggleFormButton?.addEventListener('click', () => {
-  // Toggle form visibility when the button is clicked
-  if (form.style.display === 'block') {
-    form.style.display = 'none';
-  } else {
-    form.style.display = 'block';
-  }
+    // Get form data
+    const formData = new FormData(form);
+    const bookData: Record<string, string | number> = {};
+
+    // Convert formData to object
+    formData.forEach((value, key) => {
+      if (key === "id" || key === "year" || key === "pages" || key === "price") {
+        bookData[key] = Number(value);
+      } else {
+        bookData[key] = value.toString();
+      }
+    });
+
+    try {
+      const response = await fetch("/api/books", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert("✅ Book successfully added!");
+        form.reset(); // Clear the form
+      } else {
+        alert(`❌ Error: ${result.message}`);
+      }
+    } catch (error) {
+      console.error("Error submitting book:", error);
+      alert("❌ Internal server error.");
+    }
+  });
 });
