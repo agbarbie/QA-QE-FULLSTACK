@@ -20,3 +20,4 @@ export const adminGuard = roleGuard(["Admin"]);
 export const librarianGuard = roleGuard(["Librarian"]); 
 export const borrowerGuard = roleGuard(["Borrower"]);   
 
+export const admin1Guard = roleGuard(["Admin","Librarian"]);   

@@ -13,5 +13,6 @@ router.post("/register", registerUser)
 router.post("/login", loginUser)
 router.post("/logout", logoutUser)
 router.post("/delete/:user_id", protect,adminGuard,deleteUser);
+router.post("/update/:user_id", protect,adminGuard,deleteUser);
 
 export default router
