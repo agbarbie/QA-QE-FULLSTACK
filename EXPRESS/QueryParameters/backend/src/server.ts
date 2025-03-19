@@ -12,7 +12,7 @@ import bookRoutes from "@app/routes/booksRoute";
 import borrowerRoutes from "@app/routes/borrowersRoute";
 import user_roleRoutes from "@app/routes/userRoleRouter";
 import authRoutes from "@app/routes/authRoutes";
-
+import bookcopiesRoute from "@app/routes/bookCopiesRoutes"
 
 dotenv.config();
 
@@ -35,6 +35,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/borrowers", borrowerRoutes);
 app.use("/api/user_role", user_roleRoutes);
+app.use("/api/BooksCopies", bookRoutes);
 
 // Middleware to log requests for debugging
 app.use((req: Request, res: Response, next: NextFunction) => {

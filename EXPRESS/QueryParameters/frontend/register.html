@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Book Store</title>
+  <link rel="stylesheet" href="styleRegister.css">
+</head>
+<body>
+  <div class="register-container">
+    <h1>Create an Account</h1>
+    <form id="register-form">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" value="Alice Johnson" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="alice@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+      </div>
+      
+      <!-- Hidden Fields for User ID and Role -->
+      <input type="hidden" id="user_id" name="user_id" value="1">
+      <input type="hidden" id="role_id" name="role_id" value="1">
+      
+      <button type="submit">Register</button>
+    </form>
+    
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+  </div>
+
+  <script type="module" src="./src/register.ts"></script>
+</body>
+</html>
