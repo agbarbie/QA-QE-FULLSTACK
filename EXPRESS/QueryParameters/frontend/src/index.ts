@@ -700,3 +700,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (!isLoggedIn) {
+    // Redirect to login page if not logged in
+    window.location.href = "login.html";
+  }
+
+  // Logout button functionality
+  const logoutButton = document.getElementById("logout-button") as HTMLButtonElement;
+  if (logoutButton) {
+    logoutButton.addEventListener("click", () => {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("userEmail");
+      window.location.href = "login.html";
+    });
+  }
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (!isLoggedIn) {
+    // Redirect to login page if not logged in
+    window.location.href = "login.html";
+  }
+
+  // Logout button functionality
+  const logoutButton = document.getElementById("logout-button") as HTMLButtonElement;
+  if (logoutButton) {
+    logoutButton.addEventListener("click", () => {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("userEmail");
+      window.location.href = "login.html";
+    });
+  }
+});

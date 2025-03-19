@@ -70,8 +70,10 @@ export const loginUser = asyncHandler(async (req: Request, res: Response, next: 
     }
     
     // Generate JWT token - FIXED: using user_id instead of id
-    generateToken(res, user.user_id, user.role_id);
+    const token = generateToken(res, user.user_id, user.role_id);
     
+    res.cookie("token", token, { httpOnly: true, maxAge: 86400000 });
+
     res.status(200).json({
         message: "Login successful",
         user: {
@@ -83,6 +85,8 @@ export const loginUser = asyncHandler(async (req: Request, res: Response, next: 
             role_name: user.role_name
         }
     });
+    res.cookie("token", token, {httpOnly: true, maxAge:86400000})
+    res.redirect("")
 });
 
 export const logoutUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {

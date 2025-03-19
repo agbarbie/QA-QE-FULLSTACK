@@ -103,3 +103,104 @@ export const getBorrower = asyncHandler( async(req: Request, res: Response) => {
       res.status(500).json({ message: "Internal server error" });
     }
   });
+
+  // Borrow a book
+export const borrowBook = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const { user_id, book_id, librarian_id } = req.body;
+    
+    // Check if user exists
+    const userCheck = await pool.query("SELECT * FROM public.users WHERE user_id = $1", [user_id]);
+    if (userCheck.rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    // Check if book exists and is available
+    const bookCheck = await pool.query("SELECT * FROM public.books WHERE id = $1", [book_id]);
+    if (bookCheck.rows.length === 0) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+    
+    // Check if book is already borrowed
+    const bookStatusCheck = await pool.query(
+      "SELECT * FROM public.borrowers WHERE id = $1 AND status = 'borrowed'", 
+      [book_id]
+    );
+    if (bookStatusCheck.rows.length > 0) {
+      return res.status(400).json({ message: "Book is already borrowed" });
+    }
+    
+    // Generate a unique borrower_id
+    const borrowerId = `BRW-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    
+    // Set borrow date as current date and return date as 14 days from now
+    const borrowDate = new Date();
+    const returnDate = new Date();
+    returnDate.setDate(returnDate.getDate() + 14); // Default loan period of 14 days
+    
+    // Insert the borrowing record
+    const borrowResult = await pool.query(
+      "INSERT INTO borrowers(borrower_id, user_id, id, librarian_id, borrow_date, return_date, status, created_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", 
+      [
+        borrowerId,
+        user_id,
+        book_id,
+        librarian_id,
+        borrowDate,
+        returnDate,
+        'borrowed',
+        new Date()
+      ]
+    );
+    
+    // Update book status in books table if you have a status field there
+    await pool.query(
+      "UPDATE books SET status = 'borrowed' WHERE id = $1",
+      [book_id]
+    );
+    
+    res.status(201).json({
+      message: "Book borrowed successfully",
+      borrowDetails: borrowResult.rows[0]
+    });
+  } catch (error) {
+    console.error("Error borrowing book:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// You can also add a function to renew a borrowed book
+export const renewBook = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const { borrower_id } = req.params;
+    
+    // Check if the borrowing record exists
+    const borrowCheck = await pool.query(
+      "SELECT * FROM public.borrowers WHERE borrower_id = $1 AND status = 'borrowed'", 
+      [borrower_id]
+    );
+    
+    if (borrowCheck.rows.length === 0) {
+      return res.status(404).json({ message: "Borrowing record not found or book already returned" });
+    }
+    
+    // Extend return date by 7 more days
+    const currentReturnDate = new Date(borrowCheck.rows[0].return_date);
+    const newReturnDate = new Date(currentReturnDate);
+    newReturnDate.setDate(newReturnDate.getDate() + 7);
+    
+    // Update the return date
+    const result = await pool.query(
+      "UPDATE borrowers SET return_date = $1 WHERE borrower_id = $2 RETURNING *",
+      [newReturnDate, borrower_id]
+    );
+    
+    res.status(200).json({
+      message: "Book renewed successfully",
+      borrowDetails: result.rows[0]
+    });
+  } catch (error) {
+    console.error("Error renewing book:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
