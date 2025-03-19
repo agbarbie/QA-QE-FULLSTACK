@@ -22,9 +22,10 @@ router.post("/", protect, librarianGuard, createBooks)
 // Protected Routes - Only librarian can manage their own books
 router.post("/", protect, librarianGuard, createBooks);
 router.put("/:id", protect, librarianGuard, updateBooks);
-router.delete("/:id", protect, librarianGuard, deleteBooks);
 
 // Admin Routes - Admins can manage all events
 router.delete("/:id/admin", protect, adminGuard, deleteBooks);
+router.post("/", protect, adminGuard, createBooks);
+router.put("/:id", protect, adminGuard, updateBooks);
 
 export default router

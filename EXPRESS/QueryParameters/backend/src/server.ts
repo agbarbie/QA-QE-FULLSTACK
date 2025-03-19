@@ -31,7 +31,7 @@ const _dirname = path.resolve();
 
 //import current routes
 app.use("/api/auth", authRoutes);
-// app.use("/api/users", userRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/borrowers", borrowerRoutes);
 app.use("/api/user_role", user_roleRoutes);

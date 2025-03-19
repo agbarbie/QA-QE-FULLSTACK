@@ -49,7 +49,7 @@ export const loginUser = asyncHandler(async (req: Request, res: Response, next: 
     const userQuery = await pool.query(
         `SELECT users.user_id, users.name, users.email, users.password, users.role_id, user_roles.role_name 
          FROM users 
-         JOIN user_roles ON users.role_id = user_roles.id 
+         JOIN user_roles ON users.role_id = user_roles.role_id 
          WHERE email = $1`,
         [email]
     );
@@ -104,3 +104,21 @@ export const logoutUser = asyncHandler(async (req: Request, res: Response, next:
     res.status(200).json({ message: "User logged out successfully" });
 });
 
+
+  // Delete: Remove a user
+  export const deleteUser = asyncHandler( async (req: Request, res: Response) => {
+    try {
+      const { user_id } = req.params;
+      const result = await pool.query("DELETE FROM public.users WHERE user_id = $1 RETURNING *", [user_id]);
+      
+      if (result.rows.length === 0) {
+        res.status(404).json({ message: "User not found" });
+        return;
+      } 
+      
+      res.json({ message: "User deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
