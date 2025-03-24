@@ -4,7 +4,7 @@
 /* General Styles */
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
                 url("https://media.istockphoto.com/id/1151849228/vector/library-book.jpg?s=170667a&w=0&k=20&c=WE2EVETpzclSEMf0TyjtjGlYfV2_CUJHKuzQAXfU2Aw=");
     background-size: cover;
     background-position: center;
@@ -20,11 +20,13 @@ body {
 /* Header Styles */
 header {
     position: absolute;
-    top: 10%;
+    top: 5%;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
     color: #fff;
+    width: 100%;
+    max-width: 500px;
 }
 
 header h1 {
@@ -33,20 +35,62 @@ header h1 {
     text-transform: uppercase;
     letter-spacing: 1px;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-    padding-right: 20px;
+    margin-bottom: 2rem;
 }
 
-/* Glassmorphic Login Container */
-.login-container {
+/* Form Container */
+.form-container {
+    position: relative;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    margin-bottom: -1px;
+    position: relative;
+    z-index: 10;
+}
+
+.tab {
+    flex: 1;
+    padding: 12px 0;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    cursor: pointer;
+    border-radius: 10px 10px 0 0;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid transparent;
+}
+
+.tab:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.tab.active {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    color: #fff;
+    border-bottom: 3px solid #ff007f;
+}
+
+/* Form Sections */
+.form-section {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(15px);
     padding: 2rem;
-    border-radius: 12px;
+    border-radius: 0 0 12px 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    width: 350px;
+    width: 100%;
+    max-width: 400px;
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.3);
     animation: fadeIn 0.8s ease-in-out;
+    box-sizing: border-box;
+    margin: 0 auto;
 }
 
 /* Title */
@@ -55,6 +99,14 @@ h2 {
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+h2 i {
+    color: #ff007f;
 }
 
 /* Form Group */
@@ -70,8 +122,8 @@ label {
     font-weight: 500;
 }
 
-/* Input Fields */
-input {
+/* Input Fields and Select Dropdown */
+input, select {
     width: 100%;
     padding: 0.75rem;
     border: none;
@@ -81,20 +133,37 @@ input {
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
     transition: all 0.3s ease;
-    box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.1), 
+    box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.1),
                 inset -2px -2px 5px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
 }
 
 input::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
 
-input:focus {
+input:focus, select:focus {
     background: rgba(255, 255, 255, 0.3);
     box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.4);
 }
 
-/* Login Button */
+/* Select specific styles */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+select option {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Button */
 button {
     width: 100%;
     padding: 0.8rem;
@@ -109,14 +178,16 @@ button {
     text-transform: uppercase;
     letter-spacing: 1px;
     box-shadow: 3px 3px 10px rgba(255, 0, 127, 0.3);
+    margin-top: 10px;
 }
 
 button:hover {
     background: linear-gradient(45deg, #8b00ff, #ff007f);
     box-shadow: 0px 0px 15px rgba(255, 0, 127, 0.6);
+    transform: translateY(-2px);
 }
 
-/* Register Link */
+/* Links */
 p {
     margin-top: 1rem;
     color: white;
@@ -148,8 +219,16 @@ p a:hover {
 }
 
 /* Responsive Design */
-@media (max-width: 400px) {
-    .login-container {
+@media (max-width: 500px) {
+    header {
         width: 90%;
+    }
+    
+    .form-section {
+        padding: 1.5rem;
+    }
+    
+    header h1 {
+        font-size: 1.5rem;
     }
 }

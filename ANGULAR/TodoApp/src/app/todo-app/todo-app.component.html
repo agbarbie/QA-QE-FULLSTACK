@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="./todo-app.component.css">
+<script src="https://kit.fontawesome.com/d85ca7e606.js" crossorigin="anonymous"></script>
+<div class="main">
+  <h1>Todo List App</h1>
+  <div class="search">
+    <input type="text" placeholder="Add Todo" [(ngModel)]="addMe" />
+    <button (click)="addItem()">
+      <img src="add.png" alt="" srcset="">
+    </button>
+  </div>
+  <ul>
+    <li *ngFor="let item of products; let i = index">
+      <span *ngIf="editIndex !== i">{{ item }}</span>
+      <input *ngIf="editIndex === i" type="text" [(ngModel)]="editText" />
+      
+      <div class="action-buttons">
+        <button *ngIf="editIndex !== i" (click)="editItem(i)">
+          <img src="edit.png" alt="Edit" srcset="">
+        </button>
+        <button *ngIf="editIndex === i" (click)="saveEdit()">
+          <img src="save.png" alt="Save" srcset="">
+        </button>
+        <button (click)="removeItem(i)">
+          <img src="delete.png" alt="" srcset="">
+        </button>
+      </div>
+    </li>
+  </ul>
+  <p>{{ errorText }}</p>
+</div>

@@ -3,30 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Book Store</title>
+  <title>Login/Signup - Barbie's Book Store</title>
   <link rel="stylesheet" href="styleLogin.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 </head>
 <body>
-  <header><h1>WELCOME TO BARBIE'S BOOKSTORE</h1>
-    <div class="login-container">
-      <h2>Login to Book Store</h2>
-      <form id="login-form">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" value="alice@example.com" required>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      
-      <p>Don't have an account? <a href="register.html">Register here</a></p>
+  <header>
+    <h1>WELCOME TO BARBIE'S BOOKSTORE</h1>
+    
+    <div class="form-container">
+      <!-- Tab Navigation -->
+      <div class="tabs">
+        <div class="tab" id="login-tab" onclick="switchForm('login')">Login</div>
+        <div class="tab" id="signup-tab" onclick="switchForm('signup')">Sign Up</div>
+      </div>
+
+      <!-- Login Form -->
+      <div class="form-section login-container" id="login-section">
+        <h2><i class="fas fa-sign-in-alt"></i> Login to Book Store</h2>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="alice@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <div class="form-group">
+            <label for="user-type">I am a:</label>
+            <select id="user-type" name="userType" required>
+              <option value="borrower">Borrower</option>
+              <option value="librarian">Librarian</option>
+              <option value="admin">Administrator</option>
+            </select>
+          </div>
+          <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="#" onclick="switchForm('signup')">Register here</a></p>
+      </div>
+
+      <!-- Signup Form -->
+      <div class="form-section signup-container" id="signup-section">
+        <h2><i class="fas fa-user-plus"></i> Create New Account</h2>
+        <form id="signup-form">
+          <div class="form-group">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" name="password" required>
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" name="confirmPassword" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-user-type">Register as:</label>
+            <select id="signup-user-type" name="userType" required>
+              <option value="borrower">Borrower</option>
+              <option value="librarian">Librarian (Requires Approval)</option>
+            </select>
+          </div>
+          <button type="submit">Create Account</button>
+        </form>
+        <p>Already have an account? <a href="#" onclick="switchForm('login')">Login here</a></p>
+      </div>
     </div>
-  
   </header>
- 
+
+  <script>
+    // Function to switch between login and signup forms
+    function switchForm(formType) {
+      if (formType === 'login') {
+        document.getElementById('login-section').style.display = 'block';
+        document.getElementById('signup-section').style.display = 'none';
+        document.getElementById('login-tab').classList.add('active');
+        document.getElementById('signup-tab').classList.remove('active');
+      } else {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('signup-section').style.display = 'block';
+        document.getElementById('signup-tab').classList.add('active');
+        document.getElementById('login-tab').classList.remove('active');
+      }
+    }
+
+    // Initialize the form display
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('login-tab').classList.add('active');
+      document.getElementById('signup-section').style.display = 'none';
+    });
+  </script>
+  
   <script type="module" src="./src/login.ts"></script>
 </body>
 </html>
