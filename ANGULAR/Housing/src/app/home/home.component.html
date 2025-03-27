@@ -1,0 +1,17 @@
+<header class="HOMES-header">
+    <img class="brand-logo" src="home.png" alt="logo">HOMES
+</header>
+<section class="content">
+    <form>
+        <input type="text" placeholder="Filter by street">
+        <button class="primary" type="button">Find homes</button>
+    </form>
+</section>
+<section>"results"</section>
+<section class="listing" *ngFor="let location of data">
+    <img [src]="location.photo"  [alt]="location.name">
+    <h2>"listing-heading">{{location.name}}</h2>
+    <p class="listing-address">
+      {{location.city}}, {{location.state}}
+    </p>
+</section>

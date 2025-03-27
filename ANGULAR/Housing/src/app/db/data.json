@@ -1,0 +1,34 @@
+{
+    "apartments":[
+        {
+          "id": 1,
+          "name": "Sunnyvale Apartments",
+          "city": "San Francisco",
+          "state": "CA",
+          "photo": "https://example.com/sunnyvale.jpg",
+          "availableUnits": 3,
+          "wifi": true,
+          "laundry": true
+        },
+        {
+          "id": 2,
+          "name": "Maplewood Residences",
+          "city": "Austin",
+          "state": "TX",
+          "photo": "https://example.com/maplewood.jpg",
+          "availableUnits": 5,
+          "wifi": true,
+          "laundry": false
+        },
+        {
+          "id": 3,
+          "name": "Pine Hill Estates",
+          "city": "Denver",
+          "state": "CO",
+          "photo": "https://example.com/pinehill.jpg",
+          "availableUnits": 2,
+          "wifi": false,
+          "laundry": true
+        }
+    ]
+}
