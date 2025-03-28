@@ -5,7 +5,7 @@
           "name": "Sunnyvale Apartments",
           "city": "San Francisco",
           "state": "CA",
-          "photo": "https://example.com/sunnyvale.jpg",
+          "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQrlrBGj8wm8na7KuYuJfdS1O0vGsfaWIXBHvArMXtQUNZmEEfYzyXhPHZ2OLzI5GkCfI&usqp=CAU",
           "availableUnits": 3,
           "wifi": true,
           "laundry": true
@@ -15,7 +15,7 @@
           "name": "Maplewood Residences",
           "city": "Austin",
           "state": "TX",
-          "photo": "https://example.com/maplewood.jpg",
+          "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2AkFI-mbbacNZYwWvnae_qj9l009LHGAy_g&s",
           "availableUnits": 5,
           "wifi": true,
           "laundry": false
@@ -25,7 +25,7 @@
           "name": "Pine Hill Estates",
           "city": "Denver",
           "state": "CO",
-          "photo": "https://example.com/pinehill.jpg",
+          "photo": "https://farm4.static.flickr.com/3921/14649880720_5188f63a45_b.jpg",
           "availableUnits": 2,
           "wifi": false,
           "laundry": true

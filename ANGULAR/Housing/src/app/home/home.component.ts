@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   }
 
   fetchData(): void {
-    fetch('http://localhost:5000/1')
+    fetch('http://localhost:3000/apartments')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

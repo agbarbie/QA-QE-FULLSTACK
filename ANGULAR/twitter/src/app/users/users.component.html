@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>Users, Posts, and Comments</h1>
+  
+  <div class="section">
+      <h2>Users</h2>
+      <select [(ngModel)]="selectedUserId" (change)="onUserSelect()">
+          <option *ngFor="let user of users" [value]="user.id">
+              {{ user.username }}
+          </option>
+      </select>
+  </div>
+
+  <div class="section" *ngIf="posts.length">
+      <h2>Posts</h2>
+      <select [(ngModel)]="selectedPostId" (change)="onPostSelect()">
+          <option *ngFor="let post of posts" [value]="post.id">
+              {{ post.title }}
+          </option>
+      </select>
+  </div>
+
+  <div class="section" *ngIf="comments.length">
+      <h2>Comments</h2>
+      <div *ngFor="let comment of comments" class="comment">
+          <h3>{{ comment.name }} ({{ comment.email }})</h3>
+          <p>{{ comment.body }}</p> 
+      </div>
+  </div>
+</div>

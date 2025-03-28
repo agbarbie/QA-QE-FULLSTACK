@@ -1,1 +1,15 @@
-<app-home></app-home>
+<nav>
+    <ul>
+      <li>
+        <a [routerLink]="['']" >Home</a>
+      </li>
+      <li>
+        <a [routerLink]="['/login']" >Login</a>
+      </li>
+      <li>
+        <a [routerLink]="['/post']" >Post</a>
+      </li>
+    </ul>
+  </nav>
+    <router-outlet></router-outlet>
+<!-- <app-home></app-home> -->
