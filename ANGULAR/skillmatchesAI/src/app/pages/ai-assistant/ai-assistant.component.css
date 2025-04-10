@@ -1,0 +1,227 @@
+/* Main Layout */
+.ai-assistant-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+  }
+  
+  .sidebar {
+    width: 170px;
+    background-color: #FFAA00;
+    color: white;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sidebar .logo {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 5px;
+  }
+  
+  .sidebar h2 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .sidebar nav ul {
+    list-style: none;
+    width: 100%;
+  }
+  
+  .sidebar nav ul li {
+    padding: 10px 20px;
+    cursor: pointer;
+    color: white;
+    font-weight: 500;
+    margin-bottom: 5px;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .sidebar nav ul li i {
+    width: 20px;
+    text-align: center;
+  }
+  
+  .sidebar nav ul li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .sidebar nav ul li.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-weight: bold;
+  }
+  
+  .auth-buttons {
+    margin-top: auto;
+    margin-bottom: 150px;
+    width: 100%;
+    padding: 0 15px;
+  }
+  
+  .auth-buttons button {
+    width: 100%;
+    margin: 5px 0;
+    padding: 8px 0;
+    border-radius: 20px;
+    border: none;
+    background-color: white;
+    color: #FFAA00;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .auth-buttons button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .auth-buttons .logout-button {
+    background-color: #1a1a50;
+    color: white;
+  }
+  
+  .auth-buttons .logout-button:hover {
+    background-color: #12123c;
+  }
+  
+  /* Main Content */
+  .ai-main-content {
+    flex: 1;
+    padding: 30px;
+  }
+  
+  .ai-header h1 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 30px;
+  }
+  
+  .ai-sections {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .ai-section {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+  }
+  
+  .section-header {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .section-header h2 {
+    font-size: 18px;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Chat Containers */
+  .ai-chat-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 40px);
+  }
+  
+  .ai-prompt p {
+    color: #7f8c8d;
+    font-style: italic;
+    margin-bottom: 15px;
+  }
+  
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-height: 400px;
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #e3f2fd;
+    position: relative;
+  }
+  
+  .message.user-message {
+    background-color: #e8f5e9;
+    margin-left: 20px;
+  }
+  
+  .message p {
+    margin: 0;
+  }
+  
+  .time {
+    font-size: 11px;
+    color: #7f8c8d;
+    display: block;
+    text-align: right;
+    margin-top: 5px;
+  }
+  
+  .message-input {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  .message-input input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    font-size: 14px;
+  }
+  
+  .message-input button {
+    padding: 0 15px;
+    background: #1a1a50;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .message-input button:hover {
+    background: #12123c;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .ai-sections {
+      flex-direction: column;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+    
+    .ai-main-content {
+      margin-left: 0;
+      padding: 20px;
+    }
+  }

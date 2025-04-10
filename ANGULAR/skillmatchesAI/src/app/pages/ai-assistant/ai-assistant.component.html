@@ -1,1 +1,56 @@
-<p>ai-assistant works!</p>
+<div class="ai-assistant-container">
+    <aside class="sidebar">
+      <img src="skillmatchAi.png" alt="SkillMatch AI Logo" class="logo" />
+      <h2>SkillMatchAI</h2>
+      <nav>
+        <ul>
+          <li (click)="navigateTo('/landing')"><i class="fas fa-home"></i> Home</li>
+          <li (click)="navigateTo('/admin-dashboard')"><i class="fas fa-user-shield"></i> Admin</li>
+          <li class="active"><i class="fas fa-robot"></i> Employer's AI Assistant</li>
+          <li (click)="navigateTo('/users')"><i class="fas fa-users"></i> Users</li>
+        </ul>
+      </nav>
+      <div class="auth-buttons">
+        <button (click)="navigateTo('/login')">Login</button>
+        <button (click)="navigateTo('/signup')">Sign Up</button>
+        <button (click)="navigateTo('/logout')" class="logout-button">Log Out</button>
+      </div>
+    </aside>
+  
+    <div class="ai-main-content">
+      <div class="ai-header">
+        <h1>AI Assistant</h1>
+      </div>
+  
+      <div class="ai-sections">
+        <!-- Employer's AI Section -->
+        <section class="ai-section employer-section">
+          <div class="section-header">
+            <h2><i class="fas fa-briefcase"></i> Employer's AI</h2>
+          </div>
+          <div class="ai-chat-container">
+            <div class="ai-prompt">
+              <p>How may I help you?...</p>
+            </div>
+            <div class="chat-messages" #employerMessagesContainer>
+              <div *ngFor="let message of employerMessages" class="message" [class.user-message]="message.isUser">
+                <p>{{ message.text }}</p>
+                <span class="time">{{ message.time | date:'shortTime' }}</span>
+              </div>
+            </div>
+            <div class="message-input">
+              <input
+                type="text"
+                [(ngModel)]="employerMessage"
+                placeholder="Type your message here..."
+                (keyup.enter)="sendEmployerMessage()"
+              />
+              <button (click)="sendEmployerMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+  

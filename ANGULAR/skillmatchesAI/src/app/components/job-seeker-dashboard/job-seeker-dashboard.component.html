@@ -5,7 +5,6 @@
     <ul>
       <li (click)="navigateTo('/landing')">Home</li>
       <li (click)="navigateTo('/portfolio')">Portfolio</li>
-      <li (click)="navigateTo('/skills-analytics')">Skills Analytics</li>
       <li (click)="navigateTo('/jobs')">Jobs</li>
       <li (click)="navigateTo('/job-application-form')">Applications</li>
     </ul>
@@ -122,18 +121,159 @@
           <button class="view-jobs-button" (click)="navigateTo('/jobs')">View Jobs</button>
         </div>
 
-        <!-- SKILLS ANALYTICS TAB -->
-        <div class="skills-analytics-section" *ngIf="activeTab === 'skills-analytics'">
-          <h2>Skills Analytics</h2>
-          <p>Track your top skills, gaps, and suggestions for improvement here.</p>
+       <!-- SKILLS ANALYTICS TAB - Enhanced Content -->
+<div class="skills-analytics-section" *ngIf="activeTab === 'skills-analytics'">
+  <div class="skills-dashboard">
+    <div class="skills-summary">
+      <h2>Your Skills Dashboard</h2>
+      <div class="skills-overview">
+        <div class="overview-card">
+          <h3>Overall Skill Level</h3>
+          <div class="skill-level-circle">
+            <span class="level-value">78%</span>
+            <span class="level-label">Proficiency</span>
+          </div>
         </div>
+        <div class="overview-card">
+          <h3>Top Skills</h3>
+          <div class="top-skills-list">
+            <span class="skill-tag">Angular</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">UI/UX</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <!-- CAREER PATH TAB -->
-        <div class="career-path-section" *ngIf="activeTab === 'career-path'">
-          <h2>Career Path</h2>
-          <p>Visualize your current path and future role recommendations based on your profile and applications.</p>
+    <div class="skills-details">
+      <div class="skills-progress">
+        <h3>Skill Proficiency Levels</h3>
+        <div class="progress-bar" *ngFor="let skill of topSkills">
+          <div class="skill-info">
+            <span>{{skill.name}}</span>
+            <span>{{skill.level}}%</span>
+          </div>
+          <div class="progress-container">
+            <div class="progress-fill" [style.width]="skill.level + '%'"></div>
+          </div>
         </div>
+      </div>
+
+      <div class="skills-recommendations">
+        <h3>Recommended Skills to Learn</h3>
+        <div class="recommendation-card">
+          <h4>React</h4>
+          <p>Complementary to your Angular skills - 85% of full-stack roles require React knowledge</p>
+          <div class="recommendation-meta">
+            <span>45 matching jobs</span>
+            <button>View Resources</button>
+          </div>
+        </div>
+        <div class="recommendation-card">
+          <h4>Node.js</h4>
+          <p>Expand your backend capabilities - would make you eligible for 60% more positions</p>
+          <div class="recommendation-meta">
+            <span>32 matching jobs</span>
+            <button>View Resources</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="view-jobs-button" (click)="navigateTo('/jobs')">View Jobs Matching My Skills</button>
+</div>
+
+<!-- CAREER PATH TAB - Enhanced Content -->
+<div class="career-path-section" *ngIf="activeTab === 'career-path'">
+  <div class="career-path-visualization">
+    <h2>Your Career Progression</h2>
+    
+    <div class="path-timeline">
+      <div class="timeline-item current">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h3>Current Position</h3>
+          <p class="role-title">Frontend Developer (2 years experience)</p>
+          <div class="role-skills">
+            <span>Angular</span>
+            <span>TypeScript</span>
+            <span>UI/UX</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item next">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h3>Next Recommended Role</h3>
+          <p class="role-title">Senior Frontend Developer</p>
+          <div class="match-info">
+            <span class="match-percent">75% match to your profile</span>
+            <button class="view-roles">View Open Roles</button>
+          </div>
+          <div class="skills-needed">
+            <h4>Skills to Develop:</h4>
+            <ul>
+              <li>Advanced State Management</li>
+              <li>Performance Optimization</li>
+              <li>Mentoring Skills</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item future">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h3>Future Potential Paths</h3>
+          <div class="path-options">
+            <div class="path-option">
+              <h4>Technical Path</h4>
+              <p>Frontend Architect</p>
+              <ul>
+                <li>System Design</li>
+                <li>Technical Leadership</li>
+              </ul>
+            </div>
+            <div class="path-option">
+              <h4>Management Path</h4>
+              <p>Engineering Manager</p>
+              <ul>
+                <li>People Management</li>
+                <li>Project Leadership</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="career-stats">
+      <div class="stat-card">
+        <h3>Projected Salary Growth</h3>
+        <div class="salary-projection">
+          <div class="salary-point">
+            <span>Current: $85k</span>
+          </div>
+          <div class="salary-point">
+            <span>Next Role: $110k</span>
+          </div>
+          <div class="salary-point">
+            <span>Future: $140k+</span>
+          </div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <h3>Path Readiness</h3>
+        <div class="readiness-meter">
+          <span class="readiness-value">65%</span>
+          <span>Prepared for next role</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="view-jobs-button" (click)="navigateTo('/jobs')">View Jobs On My Career Path</button>
+</div>
       </div>
     </section>
   </div>
-</div>

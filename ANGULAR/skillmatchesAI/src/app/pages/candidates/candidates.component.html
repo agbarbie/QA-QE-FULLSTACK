@@ -71,7 +71,7 @@
                                   [class.interviewing]="candidate.status === 'Interviewing'">
               {{ candidate.status }}
             </span>
-            <button class="view-profile-button" (click)="navigateTo('/candidate/' + candidate.name.toLowerCase().replace(' ', '-'))">
+            <button class="view-profile-button" (click)="navigateTo('/jobseeker-profile/' + candidate.name.toLowerCase().replace(' ', '-'))">
               View Profile
             </button>
           </div>

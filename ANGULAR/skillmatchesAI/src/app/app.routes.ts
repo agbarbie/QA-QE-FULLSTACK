@@ -9,23 +9,27 @@ import { EmployerDashboardComponent } from './components/employer-dashboard/empl
 import { LandingComponent } from './pages/landing/landing.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
-import { UserManagementComponent } from './pages/user-management/user-management.component';
+import { UserManagementComponent } from './user-management/user-management.component';
 import { AiAssistantComponent } from './pages/ai-assistant/ai-assistant.component';
 import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { JobsComponent } from './jobs/jobs.component';
 import {JobApplicationForm} from './pages/job-application-form/job-application-form.component'
 import { CandidatesComponent } from './pages/candidates/candidates.component';
 import {JobSeekerProfileComponent} from './pages/jobseeker-profile/jobseeker-profile.component';
+import { PostJobsComponent } from './post-jobs/post-jobs.component';
 
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
   {path:'contact',component:ContactComponent},
+  {path: 'ai-assistant', component: AiAssistantComponent, data: { title: 'AI Assistant' } },
+  {path: 'user-management', component: UserManagementComponent, data: { title: 'User Management' } },
+  {path: 'post-jobs', component: PostJobsComponent, data: { title: 'Post Jobs' } },
   {path: 'jobseeker-profile', component: JobSeekerProfileComponent, data: { title: 'Job Seeker Profile' } },
   {path: 'candidates', component: CandidatesComponent, data: { title: 'Candidates Overview' } },
   { path: 'landing', component: LandingComponent },
   {path: 'job-application-form', component: JobApplicationForm, data: { title: 'Job Application Form' } },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent  },
   { path: 'signup', component: SignupComponent },
   { path: '', redirectTo: 'dashboard/job-seeker', pathMatch: 'full' }, // Optional: Redirect to a specific dashboard
   {path: 'jobseeker-dashboard',component: JobseekerDashboardComponent,data: { title: 'JobSeeker Dashboard' },},

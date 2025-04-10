@@ -1,0 +1,56 @@
+<aside class="sidebar">
+    <img src="skillmatchAi.png" alt="SkillMatch AI Logo" class="logo" />
+    <h2>SkillMatch AI</h2>
+    <nav>
+      <ul>
+        <li (click)="navigateTo('/landing')">Home</li>
+        <li (click)="navigateTo('/analytics')">Candidates' Analytics</li>
+        <li (click)="navigateTo('/jobs')">Jobs</li>
+        <li (click)="navigateTo('/ai-assistant')">AI Assistant</li>
+      </ul>
+    </nav>
+  </aside>
+<div class="post-job-wrapper">
+    <h1>Post a New Job</h1>
+    <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+      <label>
+        Job Title
+        <input type="text" formControlName="jobTitle" />
+      </label>
+  
+      <label>
+        Job Description
+        <textarea formControlName="jobDescription"></textarea>
+      </label>
+  
+      <label>
+        Requirements
+        <textarea formControlName="requirements"></textarea>
+      </label>
+  
+      <div class="form-row">
+        <label>
+          Salary Range
+          <input type="text" formControlName="salaryRange" />
+        </label>
+  
+        <label>
+          Location
+          <input type="text" formControlName="location" />
+        </label>
+      </div>
+  
+      <label>
+        Job Type
+        <select formControlName="jobType">
+          <option *ngFor="let type of jobTypes" [value]="type">{{ type }}</option>
+        </select>
+      </label>
+  
+      <div class="form-actions">
+        <button type="button" (click)="onCancel()">Cancel</button>
+        <button type="submit">Post Job</button>
+      </div>
+    </form>
+  </div>
+  

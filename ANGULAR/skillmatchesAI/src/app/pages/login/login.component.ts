@@ -1,23 +1,29 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import{LoginModel} from '../../../interfaces/login'
-import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginModel: LoginModel = { email: '', password: '' };
+  loginForm: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
 
   onSubmit() {
-    console.log('Logging in with', this.loginModel);
-    // Simulate successful login and navigate to dashboard
-    this.router.navigate(['/landing']);
+    if (this.loginForm.valid) {
+      console.log('Logging in with:', this.loginForm.value);
+      this.router.navigate(['/landing']);
+    }
   }
 }
