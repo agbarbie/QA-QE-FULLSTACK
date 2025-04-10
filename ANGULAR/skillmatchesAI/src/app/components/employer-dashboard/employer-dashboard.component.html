@@ -1,0 +1,111 @@
+<aside class="sidebar">
+  <img src="skillmatchAi.png" alt="SkillMatch AI Logo" class="logo" />
+  <h2>SkillMatch AI</h2>
+  <nav>
+    <ul>
+      <li (click)="navigateTo('/landing')">Home</li>
+      <li class="active">Employer</li>
+      <li (click)="navigateTo('/ai-assistant')">AI Assistant</li>
+      <li (click)="navigateTo('/candidates')">Candidates</li>
+      <li (click)="navigateTo('/applications')">Applications</li>
+      <li (click)="navigateTo('/analytics')">Candidates' Analytics</li>
+    </ul>
+  </nav>
+  <div class="auth-buttons">
+    <button (click)="navigateTo('/login')">Login</button>
+    <button (click)="navigateTo('/signup')">Sign Up</button>
+    <button (click)="navigateTo('/logout')">Log Out</button>
+  </div>
+</aside>
+
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Employer Dashboard</h1>
+    <p class="welcome-message">Welcome back to TechCorp Inc.</p>
+    <button class="post-jobs-button" (click)="navigateTo('/post-jobs')">Post Jobs</button>
+  </header>
+
+  <div class="dashboard-content">
+    <section class="stats-section">
+      <div class="stat-card active-jobs">
+        <h3>Active Job Postings</h3>
+        <div class="stat-content">
+          <div class="stat-main">
+            <span class="stat-value">{{activeJobPostings}}</span>
+          </div>
+          <p class="stat-description">{{newCandidates}} with new candidates</p>
+        </div>
+      </div>
+
+      <div class="stat-card candidate-matches">
+        <h3>Candidate Matches</h3>
+        <div class="stat-content">
+          <div class="stat-main">
+            <span class="stat-value">{{candidateMatches}}</span>
+          </div>
+          <p class="stat-description">{{newMatchesThisWeek}} new this week</p>
+        </div>
+      </div>
+
+      <div class="stat-card interviews">
+        <h3>Interviews Scheduled</h3>
+        <div class="stat-content">
+          <div class="stat-main">
+            <span class="stat-value">{{interviewsScheduled}}</span>
+          </div>
+          <p class="stat-description">Next interview in {{nextInterviewIn}}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="main-content">
+      <div class="tabs">
+        <button 
+          class="tab-button" 
+          [class.active]="activeTab === 'ai-matched'"
+          (click)="setActiveTab('ai-matched')">
+          AI-MATCHED CANDIDATES
+        </button>
+        <button 
+          class="tab-button"
+          [class.active]="activeTab === 'active-jobs'"
+          (click)="setActiveTab('active-jobs')">
+          Active Jobs
+        </button>
+      </div>
+
+      <div class="tab-content">
+        <div *ngIf="activeTab === 'ai-matched'">
+          <div class="candidate-listings">
+            <div class="candidate-card" *ngFor="let candidate of candidates">
+              <div class="candidate-info">
+                <h3 class="candidate-name">{{candidate.name}}</h3>
+                <p class="candidate-position">{{candidate.position}} • {{candidate.experience}}</p>
+                <div class="candidate-skills">
+                  <span class="skill-tag" *ngFor="let skill of candidate.skills">{{skill}}</span>
+                </div>
+                <div *ngIf="candidate.matchPercentage" class="match-badge" [ngClass]="getMatchBadgeClass(candidate.matchPercentage)" [style.background-color]="'green'">
+                  {{candidate.matchPercentage}}% Match
+                </div>
+                
+              </div>
+              <div class="candidate-actions">
+                <button class="view-profile-button" (click)="navigateTo('/jobseeker-profile')">View Profile</button>
+                <button class="contact-button" (click)="navigateTo('/contact')">Contact</button>
+              </div>
+            </div>
+          </div>
+          <button class="view-candidates-button" (click)="navigateTo('/candidates')">View Candidate</button>
+        </div>
+
+        <div *ngIf="activeTab === 'analytics'">
+          <p>Analytics content goes here...</p>
+        </div>
+
+        <div *ngIf="activeTab === 'active-jobs'">
+          <p>Active jobs content goes here...</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

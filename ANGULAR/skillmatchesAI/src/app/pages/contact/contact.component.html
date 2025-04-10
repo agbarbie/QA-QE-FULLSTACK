@@ -1,0 +1,70 @@
+<div class="contact-container">
+    <div class="contact-header">
+      <h1>Schedule Interview</h1>
+      <p>Contact <strong>{{candidate.name}}</strong> to arrange an interview</p>
+    </div>
+  
+    <div class="contact-content">
+      <div class="candidate-profile">
+        <div class="avatar-container">
+          <img [src]="candidate.avatar" alt="{{candidate.name}}" class="candidate-avatar">
+        </div>
+        <h2>{{candidate.name}}</h2>
+        <div class="contact-info">
+          <div class="info-item">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M20,15.5C18.8,15.5 17.5,15.3 16.4,14.9C16.3,14.9 16.2,14.9 16.1,14.9C15.8,14.9 15.6,15 15.4,15.2L13.2,17.4C10.4,15.9 8,13.6 6.6,10.8L8.8,8.6C9.1,8.3 9.2,7.9 9,7.6C8.7,6.5 8.5,5.2 8.5,4C8.5,3.4 8.1,3 7.5,3H4C3.4,3 3,3.4 3,4C3,13.4 10.6,21 20,21C20.6,21 21,20.6 21,20V16.5C21,15.9 20.6,15.5 20,15.5M19,12H22V3H12V6H19V12Z" />
+            </svg>
+            <span>{{candidate.phone}}</span>
+          </div>
+          <div class="info-item">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z" />
+            </svg>
+            <span>{{candidate.email}}</span>
+          </div>
+        </div>
+      </div>
+  
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+        <div class="form-group">
+          <label for="yourName">Your Name*</label>
+          <input type="text" id="yourName" formControlName="yourName" placeholder="Enter your name">
+          <div *ngIf="contactForm.get('yourName')?.invalid && contactForm.get('yourName')?.touched" class="error-message">
+            Please enter your name
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="yourEmail">Your Email*</label>
+          <input type="email" id="yourEmail" formControlName="yourEmail" placeholder="Enter your email">
+          <div *ngIf="contactForm.get('yourEmail')?.invalid && contactForm.get('yourEmail')?.touched" class="error-message">
+            Please enter a valid email
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="yourPhone">Your Phone</label>
+          <input type="tel" id="yourPhone" formControlName="yourPhone" placeholder="Enter your phone number">
+        </div>
+  
+        <div class="datetime-group">
+          <div class="form-group half-width">
+            <label for="preferredDate">Preferred Date</label>
+            <input type="date" id="preferredDate" formControlName="preferredDate">
+          </div>
+          <div class="form-group half-width">
+            <label for="preferredTime">Preferred Time</label>
+            <input type="time" id="preferredTime" formControlName="preferredTime">
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" formControlName="message" rows="4"></textarea>
+        </div>
+  
+        <button type="submit" class="submit-button" [disabled]="contactForm.invalid">SEND</button>
+      </form>
+    </div>
+  </div>

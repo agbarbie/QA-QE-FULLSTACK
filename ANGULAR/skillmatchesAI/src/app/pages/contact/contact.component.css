@@ -1,0 +1,297 @@
+/* Main Container - Luxurious White Space */
+.contact-container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    font-family: 'Inter', 'Helvetica Neue', sans-serif;
+    color: #1a1a1a;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Header - Elegant Typography */
+  .contact-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    position: relative;
+  }
+  
+  .contact-header h1 {
+    font-size: 2.75rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+  }
+  
+  .contact-header p {
+    font-size: 1.15rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  .contact-header p strong {
+    color: #1a1a1a;
+    font-weight: 600;
+  }
+  
+  /* Content Layout - Balanced Proportions */
+  .contact-content {
+    display: flex;
+    gap: 4rem;
+    align-items: flex-start;
+  }
+  
+  /* Candidate Profile - Premium Card */
+  .candidate-profile {
+    flex: 1;
+    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+    padding: 2.5rem;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+    text-align: center;
+    position: sticky;
+    top: 2rem;
+    border: 1px solid rgba(226, 232, 240, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .candidate-profile:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  }
+  
+  .avatar-container {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 2rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .avatar-container::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    padding: 5px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    background-color: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  
+  .candidate-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .avatar-container:hover .candidate-avatar {
+    transform: scale(1.05);
+  }
+  
+  .candidate-profile h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.75rem;
+    color: #1a1a1a;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+  }
+  
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: #444;
+    font-size: 1.05rem;
+    justify-content: center;
+    transition: color 0.3s ease;
+  }
+  
+  .info-item:hover {
+    color: #1a1a1a;
+  }
+  
+  .icon {
+    width: 22px;
+    height: 22px;
+    color: #3b82f6;
+    transition: transform 0.3s ease;
+  }
+  
+  .info-item:hover .icon {
+    transform: scale(1.1);
+  }
+  
+  /* Contact Form - Sophisticated Inputs */
+  .contact-form {
+    flex: 2;
+    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+    padding: 2.5rem;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(226, 232, 240, 0.6);
+  }
+  
+  .form-group {
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+    color: #444;
+    font-size: 1.05rem;
+    transition: color 0.3s ease;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+  }
+  
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    background-color: white;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+  
+  .datetime-group {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .half-width {
+    flex: 1;
+  }
+  
+  /* Error Messages - Elegant Presentation */
+  .error-message {
+    color: #ef4444;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    position: absolute;
+    bottom: -1.5rem;
+    left: 0;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all 0.3s ease;
+  }
+  
+  .form-group.invalid .error-message {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Submit Button - Premium Styling */
+  .submit-button {
+    width: 100%;
+    padding: 1.15rem;
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .submit-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+  }
+  
+  .submit-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+  }
+  
+  .submit-button:hover::before {
+    left: 100%;
+  }
+  
+  .submit-button:disabled {
+    background: #e2e8f0;
+    color: #94a3b8;
+    transform: none;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .contact-content {
+      flex-direction: column;
+      gap: 3rem;
+    }
+    
+    .candidate-profile {
+      position: static;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .contact-container {
+      padding: 1.5rem;
+    }
+    
+    .datetime-group {
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .half-width {
+      width: 100%;
+    }
+    
+    .contact-header h1 {
+      font-size: 2.25rem;
+    }
+  }

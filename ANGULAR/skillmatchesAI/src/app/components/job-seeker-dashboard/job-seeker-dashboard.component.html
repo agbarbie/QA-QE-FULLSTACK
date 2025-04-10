@@ -1,0 +1,139 @@
+<aside class="sidebar">
+  <img src="skillmatchAi.png" alt="SkillMatch AI Logo" class="logo" />
+  <h2>SkillMatch AI</h2>
+  <nav>
+    <ul>
+      <li (click)="navigateTo('/landing')">Home</li>
+      <li (click)="navigateTo('/portfolio')">Portfolio</li>
+      <li (click)="navigateTo('/skills-analytics')">Skills Analytics</li>
+      <li (click)="navigateTo('/jobs')">Jobs</li>
+      <li (click)="navigateTo('/job-application-form')">Applications</li>
+    </ul>
+  </nav>
+  <div class="auth-buttons">
+    <button (click)="navigateTo('/login')">Login</button>
+    <button (click)="navigateTo('/signup')">Sign Up</button>
+    <button (click)="navigateTo('/logout')">Log Out</button>
+  </div>
+</aside>
+
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div class="header-content">
+      <div>
+        <h1><strong>JobSeekers DashBoard</strong></h1>
+        <p class="welcome-message">Welcome back, Alex! Here's your skill matching overview.</p>
+      </div>
+      <button 
+        class="complete-profile-button" 
+        (click)="navigateTo('/profile')">
+        Complete Your Profile
+      </button>
+    </div>
+  </header>
+
+  <div class="dashboard-content">
+    <section class="stats-section">
+      <div class="stat-card profile-completion">
+        <h3>Complete Your Profile</h3>
+        <div class="stat-content">
+          <div class="stat-main">
+            <span class="stat-value">{{profileCompletion}}%</span>
+            <span class="stat-label">Profile Completion</span>
+          </div>
+          <p class="stat-description">Complete your profile to improve matches</p>
+        </div>
+      </div>
+
+      <div class="stat-card job-matches">
+        <div class="stat-content">
+          <div class="stat-main">
+            <span class="stat-value">{{jobMatches}}</span>
+            <span class="stat-label">Job Matches</span>
+          </div>
+          <p class="stat-description">New matches in the last 7 days</p>
+        </div>
+      </div>
+
+      <div class="stat-card interview-requests">
+        <div class="stat-content">
+          <div class="stat-main">
+            <span class="stat-value">{{interviewRequests}}</span>
+            <span class="stat-label">Interview Requests</span>
+          </div>
+          <p class="stat-description">Pending interview requests</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="main-content">
+      <div class="tabs">
+        <button 
+          class="tab-button" 
+          [class.active]="activeTab === 'job-matches'"
+          (click)="setActiveTab('job-matches')">
+          Job Matches
+        </button>
+        <button 
+          class="tab-button"
+          [class.active]="activeTab === 'skills-analytics'"
+          (click)="setActiveTab('skills-analytics')">
+          Skills Analytics
+        </button>
+        <button 
+          class="tab-button"
+          [class.active]="activeTab === 'career-path'"
+          (click)="setActiveTab('career-path')">
+          Career Path
+        </button>
+      </div>
+
+      <div class="tab-content">
+        <!-- JOB MATCHES TAB -->
+        <div class="jobs-section" *ngIf="activeTab === 'job-matches'">
+          <div class="job-listings">
+            <div class="job-card" *ngFor="let job of jobListings">
+              <div class="job-info">
+                <h3 class="job-title">{{job.title}}</h3>
+                <div
+                  class="match-badge"
+                  [ngStyle]="{
+                    'background-color': job.matchPercentage >= 80 ? 'green' :
+                                        job.matchPercentage >= 50 ? 'yellow' : 'red',
+                    'color': job.matchPercentage >= 50 ? 'black' : 'white',
+                    'padding': '4px 10px',
+                    'border-radius': '12px',
+                    'font-weight': 'bold',
+                    'font-size': '0.875rem',
+                    'display': 'inline-block'
+                  }"
+                >
+                  {{ job.matchPercentage }}% Match
+                </div>
+                <p class="job-company">{{job.company}} - {{job.location}} - {{job.posted}}</p>
+              </div>
+              <div class="job-actions">
+                <button class="save-button" (click)="saveJob(job)">save</button>
+                <button class="apply-button" (click)="applyForJob(job)">APPLY</button>
+              </div>
+            </div>
+          </div>
+
+          <button class="view-jobs-button" (click)="navigateTo('/jobs')">View Jobs</button>
+        </div>
+
+        <!-- SKILLS ANALYTICS TAB -->
+        <div class="skills-analytics-section" *ngIf="activeTab === 'skills-analytics'">
+          <h2>Skills Analytics</h2>
+          <p>Track your top skills, gaps, and suggestions for improvement here.</p>
+        </div>
+
+        <!-- CAREER PATH TAB -->
+        <div class="career-path-section" *ngIf="activeTab === 'career-path'">
+          <h2>Career Path</h2>
+          <p>Visualize your current path and future role recommendations based on your profile and applications.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

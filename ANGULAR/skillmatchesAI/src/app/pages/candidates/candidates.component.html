@@ -1,0 +1,81 @@
+<div class="candidates-container">
+    <aside class="sidebar">
+      <h2>SkillMatch AI</h2>
+      <nav>
+        <ul>
+          <li (click)="navigateTo('/home')">Home</li>
+          <li (click)="navigateTo('/jobs')">Jobs</li>
+          <li class="active">Candidates</li>
+          <li (click)="navigateTo('/analytics')">Analytics</li>
+          <li (click)="navigateTo('/ai-assistant')">AI Assistant</li>
+        </ul>
+      </nav>
+    </aside>
+  
+    <div class="main-content">
+      <header class="header">
+        <h1>Candidates Overview</h1>
+        <div class="header-actions">
+          <button class="export-button" (click)="exportData()">
+            Export Data
+            <svg viewBox="0 0 24 24" class="export-icon">
+              <path fill="currentColor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
+            </svg>
+          </button>
+        </div>
+      </header>
+  
+      <div class="filters">
+        <div class="search-box">
+          <input type="text" [(ngModel)]="searchQuery" placeholder="Search candidates...">
+          <svg viewBox="0 0 24 24" class="search-icon">
+            <path fill="currentColor" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+          </svg>
+        </div>
+        <div class="status-filter">
+          <select [(ngModel)]="statusFilter">
+            <option value="All">All Statuses</option>
+            <option value="New">New</option>
+            <option value="Reviewed">Reviewed</option>
+            <option value="Interviewing">Interviewing</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="candidates-list">
+        <div class="candidate-card" *ngFor="let candidate of filteredCandidates">
+          <div class="candidate-header">
+            <h3>{{ candidate.name }}</h3>
+            <div class="match-badge" [style.background]="getMatchColor(candidate.matchPercentage)">
+              {{ candidate.matchPercentage }}% Match
+            </div>
+          </div>
+          
+          <div class="candidate-details">
+            <div class="role-experience">
+              <p><strong>Role:</strong> {{ candidate.role }}</p>
+              <p><strong>Experience:</strong> {{ candidate.experience }}</p>
+            </div>
+            
+            <div class="skills">
+              <strong>Skills:</strong>
+              <div class="skill-tags">
+                <span class="skill-tag" *ngFor="let skill of candidate.skills">{{ skill }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="candidate-footer">
+            <span class="status-badge" [class.new]="candidate.status === 'New'"
+                                  [class.reviewed]="candidate.status === 'Reviewed'"
+                                  [class.interviewing]="candidate.status === 'Interviewing'">
+              {{ candidate.status }}
+            </span>
+            <button class="view-profile-button" (click)="navigateTo('/candidate/' + candidate.name.toLowerCase().replace(' ', '-'))">
+              View Profile
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

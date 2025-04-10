@@ -1,0 +1,298 @@
+/* Main Container */
+.analytics-container {
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+  color: #2c3e50;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  position: relative;
+  display: inline-block;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #FFA500, #FFD700);
+  border-radius: 2px;
+}
+
+/* Section Header */
+.analytics-section h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  color: #3498db;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(52, 152, 219, 0.2);
+}
+
+/* Grid Layout */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Card Styling */
+.analytics-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(52, 152, 219, 0.1);
+}
+
+.analytics-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.analytics-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+
+/* Match Quality Section */
+.match-quality-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #ecf0f1;
+  color: #3498db;
+}
+
+.match-quality-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  font-size: 0.9rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f8f9fa;
+  transition: background 0.2s;
+}
+
+.match-quality-row:hover {
+  background: rgba(52, 152, 219, 0.05);
+}
+
+.match-legend {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: #7f8c8d;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.excellent {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+}
+
+.good {
+  background: linear-gradient(135deg, #FFA500, #FF8C00);
+}
+
+.average {
+  background: linear-gradient(135deg, #FF8C00, #FF6347);
+}
+
+/* Hiring Activity Section */
+.hiring-activity-chart {
+  height: 220px;
+  position: relative;
+  margin-top: 1rem;
+}
+
+.chart-placeholder {
+  height: 160px;
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
+
+.chart-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.applications {
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  bottom: 0;
+  width: 80%;
+}
+
+.interviews {
+  background: linear-gradient(90deg, #e74c3c, #c0392b);
+  bottom: 60px;
+  width: 60%;
+}
+
+.hires {
+  background: linear-gradient(90deg, #2ecc71, #27ae60);
+  bottom: 120px;
+  width: 40%;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+.legend-line {
+  display: inline-block;
+  width: 15px;
+  height: 3px;
+  border-radius: 3px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Skill Gap Analysis */
+.skill-gap-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.skill-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: linear-gradient(90deg, rgba(52, 152, 219, 0.05) 0%, rgba(255, 255, 255, 1) 100%);
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+  transition: all 0.3s ease;
+}
+
+.skill-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.skill-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #2c3e50;
+}
+
+.skill-details {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  text-align: right;
+}
+
+.skill-details div:first-child {
+  font-weight: 500;
+  color: #3498db;
+}
+/* View Candidates Button */
+.view-candidates-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 20px;
+  margin-top: 20px;
+  background: linear-gradient(135deg, #FFA500, #FFD700);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(255, 165, 0, 0.2);
+}
+
+.view-candidates-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 165, 0, 0.3);
+  background: linear-gradient(135deg, #FF8C00, #FFD700);
+}
+
+.view-candidates-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(255, 165, 0, 0.2);
+}
+
+.btn-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.view-candidates-btn:hover .btn-icon {
+  transform: translateX(3px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .hiring-activity-chart {
+    height: auto;
+  }
+  
+  .chart-placeholder {
+    height: 120px;
+  }
+  
+  .chart-line {
+    bottom: auto;
+    top: 20px;
+    width: 100% !important;
+    height: 20px;
+  }
+  
+  .applications { top: 20px; }
+  .interviews { top: 60px; }
+  .hires { top: 100px; }
+}

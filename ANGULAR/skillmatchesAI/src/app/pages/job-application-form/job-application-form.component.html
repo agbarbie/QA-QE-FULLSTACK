@@ -1,0 +1,61 @@
+<!-- job-application-form.component.html -->
+<div class="container">
+  <div class="header">
+    <div class="logo">SKILLMATCH.AI</div>
+    <h2 class="title">Professional Information</h2>
+  </div>
+
+  <form [formGroup]="applicationForm">
+    <div class="form-section">
+      <h3>Personal Information</h3>
+      <div class="input-fields" formGroupName="personalInfo">
+        <input type="text" placeholder="Your First Name" formControlName="firstName">
+        <input type="text" placeholder="Your Last Name" formControlName="lastName">
+        <input type="email" placeholder="Email" formControlName="email">
+        <input type="tel" placeholder="Phone" formControlName="phone">
+        <input type="password" placeholder="Password" formControlName="password">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Education Information</h3>
+      <div class="education-fields" formGroupName="educationInfo">
+        <div class="row">
+          <input type="text" placeholder="High School" formControlName="highSchool" class="high-school">
+          <input type="text" placeholder="Degree" formControlName="degree" class="degree">
+        </div>
+        <input type="text" placeholder="College/University" formControlName="college">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Skills</h3>
+      <button type="button" class="add-skill-btn" (click)="addSkill()">Add Skill</button>
+<div class="skills-list" *ngIf="skills.length > 0">
+    <div *ngFor="let skillControl of skills.controls; let i = index" class="skill-input-wrapper">
+      <input type="text" [formControl]="$any(skillControl)" placeholder="Enter skill">
+      <span class="remove-skill" (click)="removeSkill(i)">×</span>
+    </div>
+  </div>
+
+    <div class="form-section">
+      <h3>Work Experience</h3>
+      <textarea formControlName="workExperience" placeholder="Describe your work experience"></textarea>
+    </div>
+
+    <div class="form-section">
+      <h3>Portfolio</h3>
+      <input type="text" placeholder="Portfolio URL" formControlName="portfolioUrl">
+    </div>
+
+    <div class="form-section">
+      <h3>CV Upload</h3>
+      <div class="cv-upload">
+        <span>{{ selectedCVFile ? selectedCVFile.name : 'No file chosen' }}</span>
+        <label for="cv-upload" class="upload-btn">Upload CV</label>
+        <input type="file" id="cv-upload" (change)="onFileSelected($event)" style="display:none">
+      </div>
+    </div>
+
+  <button class="submit-btn" (click)="submitApplication()">Submit Application</button>
+</div>

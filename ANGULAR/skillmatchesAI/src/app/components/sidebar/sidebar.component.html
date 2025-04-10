@@ -1,0 +1,20 @@
+<p>sidebar works!</p>
+<div class="sidebar">
+    <div class="logo">
+      <img src="skillmatchAi.png" alt="SkillMatch AI Logo">
+      <h2>SkillMatch AI</h2>
+    </div>
+  
+    <nav>
+      <ul>
+        <li><a routerLink="/dashboard">Dashboard</a></li>
+        <li><a routerLink="/jobs">Job Postings</a></li>
+        <li><a routerLink="/applications">Applications</a></li>
+        <li><a routerLink="/profile">Profile</a></li>
+        <li><a routerLink="/admin" *ngIf="isAdmin">Admin Panel</a></li>
+      </ul>
+    </nav>
+  
+    <button (click)="logout()">Logout</button>
+  </div>
+  

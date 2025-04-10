@@ -1,146 +1,278 @@
+/* Global styles and variables */
 :root {
-    --primary-color: #3498db;
-    --secondary-color: #2ecc71;
-    --background-color: #f4f6f7;
-    --text-color: #2c3e50;
-    --card-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  --primary-color: #2c3e50;
+  --accent-color: #e67e22;
+  --accent-hover: #d35400;
+  --light-gray: #f8f9fa;
+  --medium-gray: #e0e0e0;
+  --dark-gray: #757575;
+  --white: #ffffff;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --font-primary: 'Libre Baskerville', Georgia, serif;
+  --font-secondary: 'Montserrat', Helvetica, Arial, sans-serif;
+  --border-radius: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-secondary);
+  line-height: 1.6;
+  color: var(--primary-color);
+  background-color: var(--light-gray);
+}
+
+/* Enhanced header styling */
+.HOMES-header {
+  background-color: var(--white);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.brand-logo {
+  height: 45px;
+  margin-right: 15px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.1));
+  transition: var(--transition);
+}
+
+.brand-logo:hover {
+  transform: scale(1.05);
+}
+
+/* Content section styling */
+.content {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  position: relative;
+}
+
+.content::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: 0;
+  right: 0;
+  height: 300px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)), url('/api/placeholder/1200/300');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  border-radius: var(--border-radius);
+}
+
+form {
+  display: flex;
+  gap: 1rem;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  position: relative;
+  z-index: 2;
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: var(--border-radius);
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  transition: var(--transition);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+button.primary {
+  background-color: var(--accent-color);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 1rem 1.5rem;
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 2px 5px rgba(230, 126, 34, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+button.primary:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(230, 126, 34, 0.4);
+}
+
+button.primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 3px rgba(230, 126, 34, 0.4);
+}
+
+/* Improved results section styling */
+.results {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2.5rem;
+}
+
+.listing {
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.listing:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Significantly improved image styling */
+.listing img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.listing:hover img {
+  transform: scale(1.05);
+}
+
+/* Add a gradient overlay to images */
+.listing::after {
+  content: '';
+  position: absolute;
+  top: 180px;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.3));
+  z-index: 1;
+  pointer-events: none;
+}
+
+.listing h2 {
+  font-family: var(--font-primary);
+  padding: 1.2rem 1.2rem 0.5rem;
+  font-size: 1.4rem;
+  color: var(--primary-color);
+  position: relative;
+}
+
+.listing-address {
+  padding: 0 1.2rem 1.5rem;
+  color: var(--dark-gray);
+  font-size: 0.95rem;
+  position: relative;
+}
+
+/* Add a price badge */
+.listing::before {
+  content: 'From $399,000';
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: var(--accent-color);
+  color: white;
+  padding: 0.5rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Property features section */
+.listing .features {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1.2rem 1.2rem;
+  font-size: 0.9rem;
+  color: var(--dark-gray);
+  border-top: 1px solid var(--medium-gray);
+  margin-top: auto;
+}
+
+.listing .feature {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Staggered animations for listings */
+.listing {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.listing:nth-child(1) { animation-delay: 0.1s; }
+.listing:nth-child(2) { animation-delay: 0.2s; }
+.listing:nth-child(3) { animation-delay: 0.3s; }
+.listing:nth-child(4) { animation-delay: 0.4s; }
+.listing:nth-child(5) { animation-delay: 0.5s; }
+.listing:nth-child(n+6) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  body {
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    background-color: var(--background-color);
-    margin: 0;
-    line-height: 1.6;
-    color: var(--text-color);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .HOMES-header {
-    display: flex;
-    align-items: center;
-    background-color: rgb(147, 137, 170);
-    padding: 1rem 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  
-  .brand-logo {
-    width: 50px;
-    height: 50px;
-    margin-right: 15px;
-    transition: transform 0.3s ease;
-  }
-  
-  .brand-logo:hover {
-    transform: scale(1.1) rotate(5deg);
-  }
-  
-  .content {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-  
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
   form {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  
-  input[type="text"] {
-    flex-grow: 1;
-    padding: 12px 20px;
-    border: 2px solid var(--primary-color);
-    border-radius: 30px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
-  
-  input[type="text"]:focus {
-    outline: none;
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2);
-  }
-  
-  .primary {
-    background-color: var(--primary-color);
-    color: rgb(10, 52, 131);
-    border: none;
-    padding: 12px 24px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  }
-  
-  .primary:hover {
-    background-color:rgb(202, 13, 202);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+    flex-direction: column;
   }
   
   .results {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-    padding: 0 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
   }
   
-  .listing {
-    background-color: white;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: var(--card-shadow);
-    transform: perspective(1000px) rotateX(0deg);
-  }
-  
-  .listing:hover {
-    transform: perspective(1000px) rotateX(-5deg) scale(1.05);
-    box-shadow: 0 15px 25px rgba(0,0,0,0.15);
-  }
-  
-  .listing-photo {
-    width:300px;
+  .listing img {
     height: 200px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
   }
   
-  .listing-photo:hover {
-    transform: scale(1.1);
+  .listing::after {
+    top: 150px;
   }
-  
-  .listing-heading {
-    padding: 1rem;
-    margin: 0;
-    background-color: var(--primary-color);
-    color: white;
-    text-align: center;
-    font-size: 1.2rem;
-  }
-  
-  .listing-address {
-    padding: 1rem;
-    text-align: center;
-    background-color: #f8f9fa;
-    margin: 0;
-    font-style: italic;
-  }
-  
-  @media (max-width: 768px) {
-    .content {
-      padding: 0 0.5rem;
-    }
-    
-    form {
-      flex-direction: column;
-    }
-    
-    .primary {
-      width: 100%;
-    }
-  }
+}
+
+/* Font imports */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@400;600;700&display=swap');

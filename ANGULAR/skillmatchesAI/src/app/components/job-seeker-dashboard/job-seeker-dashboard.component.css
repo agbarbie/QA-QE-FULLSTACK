@@ -1,0 +1,429 @@
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #FFAA00; /* Changed to match yellow sidebar */
+  color: white;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.complete-profile-button {
+  background-color: #5d5dfc;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.logo {
+  width: 50%;
+  margin: 0 auto 20px;
+  display: block;
+  border-radius: 50%;
+  border: 3px solid white;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.5rem;
+  color: white;
+  position: relative;
+}
+
+.sidebar h2::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: white;
+  margin: 10px auto;
+  border-radius: 3px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar nav li {
+  padding: 12px 15px;
+  margin: 5px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sidebar nav li:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+}
+
+.auth-buttons {
+  margin-bottom: 100px;
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-buttons button {
+  padding: 10px;
+  border: none;
+  border-radius: 20px; /* Rounded corners like in design */
+  background-color: white;
+  color: #FFAA00; /* Changed to match sidebar color */
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.auth-buttons button:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Dashboard Styles */
+.dashboard-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: 250px;
+  padding: 40px;
+  color: white; /* Changed to match dark blue background */
+  background-color: #151580; /* Changed to dark blue background */
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: white; /* Changed to white text on blue background */
+  margin-bottom: 0.5rem;
+}
+
+.welcome-message {
+  color: #ddd; /* Lighter gray for better contrast on dark blue */
+  font-size: 1.1rem;
+}
+
+/* Stats Section */
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.stat-card {
+  background: #0a0a3d; /* Changed to dark navy from previous designs */
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+  color: white; /* Changed for contrast */
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-card h3 {
+  font-size: 1.1rem;
+  color: #ddd; /* Changed for contrast */
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.stat-content .stat-main {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white; /* Changed for contrast */
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #ddd; /* Changed for contrast */
+  margin-bottom: 0.3rem;
+}
+
+.stat-description {
+  color: #bbb; /* Changed for contrast */
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.profile-completion {
+  border-top: 4px solid #4CAF50; /* Green */
+}
+
+.job-matches {
+  border-top: 4px solid #FFAA00; /* Changed to match yellow brand color */
+}
+
+.interview-requests {
+  border-top: 4px solid #4046ff; /* Changed to blue from previous designs */
+}
+
+/* Main Content */
+.main-content {
+  background: #0a0a3d; /* Changed to dark navy */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  color: white; /* Changed for contrast */
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #151580;
+}
+
+.tab-button {
+  padding: 1rem 1.5rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #ddd; /* Changed for contrast */
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.tab-button.active {
+  color: white;
+  font-weight: 500;
+  background-color: #4046ff; /* Changed to blue from previous designs */
+}
+
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #4046ff; /* Changed to blue from previous designs */
+}
+
+.tab-button:hover:not(.active) {
+  background: #151580;
+}
+
+.tab-content {
+  padding: 1.5rem;
+}
+
+/* Jobs Section */
+.jobs-section .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.jobs-section h2 {
+  font-size: 1.5rem;
+  color: white; /* Changed for contrast */
+  margin: 0;
+}
+
+.section-tabs {
+  display: flex;
+  gap: 0.5rem;
+  background-color: #222; /* Changed to match previous designs */
+  border-radius: 25px;
+  padding: 3px;
+}
+
+.section-tab {
+  padding: 0.5rem 1rem;
+  background: none;
+  border: none;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  color: white;
+  cursor: pointer;
+}
+
+.section-tab.active {
+  background: #333; /* Changed to match previous designs */
+  color: white;
+}
+
+/* Job Listings */
+.job-listings {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.job-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border: none;
+  background-color: #111143; /* Changed to match previous designs */
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.job-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.job-info .job-title {
+  font-size: 1.2rem;
+  color: white; /* Changed for contrast */
+  margin: 0 0 0.5rem 0;
+}
+
+.match-badge {
+  display: inline-block;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.high {
+  background: #4CAF50; /* Green match */
+}
+
+.medium {
+  background: #FFC107; /* Yellow match */
+}
+
+.low {
+  background: #F44336; /* Red match */
+}
+
+.job-company {
+  color: #bbb; /* Changed for contrast */
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.job-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.save-button {
+  padding: 0.5rem 1rem;
+  background: #151580; /* Changed to match previous designs */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.save-button:hover {
+  background: #0c0c50;
+}
+
+.apply-button {
+  padding: 0.5rem 1.5rem;
+  background: #FFAA00; /* Changed to match yellow brand color */
+  border: none;
+  border-radius: 5px;
+  color: black;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.apply-button:hover {
+  background: #e69a00;
+}
+
+.view-jobs-button {
+  padding: 12px 24px;
+  background-color: #56cfe1;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.view-jobs-button:hover {
+  background-color: #3ab7b5;
+}
+
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  
+  .dashboard-container {
+    margin-left: 0;
+  }
+  
+  .auth-buttons {
+    position: relative;
+    margin-top: 20px;
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-section {
+    grid-template-columns: 1fr;
+  }
+  
+  .job-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .job-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,67 @@
+<aside class="sidebar">
+  <img src="skillmatchAi.png" alt="SkillMatch AI Logo" class="logo" />
+  <h2>SkillMatch AI</h2>
+  <nav>
+    <ul>
+      <li (click)="navigateTo('/landing')">Home</li>
+      <li (click)="navigateToJobSeekers()">Job Seeker</li>
+      <li (click)="navigateToEmployers()">Employer</li>
+      <li (click)="navigateTo('/admin-dashboard')">Admin</li>
+      <li (click)="navigateTo('/candidates')">Candidates</li>
+      <li (click)="navigateTo('/ai-assistant')">AI Assistant</li>
+      <li (click)="navigateTo('/jobs')">Jobs</li>
+    </ul>
+  </nav>
+  <div class="auth-buttons">
+    <button (click)="navigateToLogin()">Login</button>
+    <button (click)="navigateToSignup()">Sign Up</button>
+  </div>
+</aside>
+
+<main class="landing-content">
+  <h1>Welcome to <span class="highlight">SkillMatch AI</span></h1>
+  <p class="tagline">Revolutionizing the hiring process by focusing on skills rather than job titles</p>
+
+  <div class="card-section">
+    <div class="card jobseekers">
+      <h3>For Job Seekers</h3>
+      <ul>
+        <p>Showcase your skills and find opportunities that match your abilities:</p>
+        <li>Create detailed skill profiles</li>
+        <li>Update professional portfolios</li>
+        <li>Apply for matched job opportunities</li>
+        <li>Explore AI-recommended career paths</li>
+      </ul>
+      <button (click)="navigateToJobSeekers()">Get Started</button>
+    </div>
+
+    <div class="card employers">
+      <h3>For Employers</h3>
+      <ul>
+        <p>Find the perfect candidates based on skills, not just resumes:</p>
+        <li>Review AI-matched candidates</li>
+        <li>Match with the system to query the candidate database</li>
+        <li>Access hiring analytics</li>
+      </ul>
+      <button (click)="navigateToEmployers()">Get Started</button>
+    </div>
+  </div>
+
+  <section class="how-it-works">
+    <h2>How SkillMatch AI Works</h2>
+    <div class="steps">
+      <div class="step">
+        <h4>1. Create Your Profile</h4>
+        <p>Job seekers build detailed skill profiles while employers define hiring requirements.</p>
+      </div>
+      <div class="step">
+        <h4>2. AI Matching</h4>
+        <p>Our advanced algorithms match candidates and opportunities based on actual skills.</p>
+      </div>
+      <div class="step">
+        <h4>3. Connect & Hire</h4>
+        <p>Employers review matches, schedule interviews, and make data-driven hiring decisions.</p>
+      </div>
+    </div>
+  </section>
+</main>

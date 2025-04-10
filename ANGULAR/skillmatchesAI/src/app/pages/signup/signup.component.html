@@ -1,0 +1,41 @@
+<div class="signup-container">
+  <h1>Sign Up for SkillMatch AI</h1>
+  <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" class="form-control" name="name" [(ngModel)]="signupModel.name" required />
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" class="form-control" name="email" [(ngModel)]="signupModel.email" required />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" class="form-control" name="password" [(ngModel)]="signupModel.password" required />
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" [(ngModel)]="signupModel.confirmPassword" required />
+    </div>
+
+    <div class="form-group">
+      <label for="role">Register as</label>
+      <select id="role" class="form-control" name="role" [(ngModel)]="signupModel.role" required>
+        <option value="jobseeker">Job Seeker</option>
+        <option value="employer">Employer</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Sign Up</button>
+    </div>
+  </form>
+
+  <p class="redirect">
+    Already have an account? <a routerLink="/login">Login</a>
+  </p>
+</div>

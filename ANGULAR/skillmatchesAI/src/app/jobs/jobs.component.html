@@ -1,0 +1,50 @@
+<aside class="sidebar">
+    <img src="skillmatchAi.png" alt="SkillMatch AI Logo" class="logo" />
+    <h2>SkillMatch AI</h2>
+    <nav>
+      <ul>
+        <li (click)="navigateTo('/landing')">Home</li>
+        <li (click)="navigateTo('/skills-analytics')">Skills Analytics</li>
+        <li (click)="navigateTo('/jobs')">Jobs</li>
+      </ul>
+    </nav>
+    <div class="auth-buttons">
+      <button (click)="navigateTo('/login')">Login</button>
+      <button (click)="navigateTo('/signup')">Sign Up</button>
+      <button (click)="navigateTo('/logout')">Log Out</button>
+    </div>
+  </aside>
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="header">
+        <h1>Available Positions</h1>
+        <div class="header-actions">
+          <button class="btn-export" (click)="exportData()">Export Data</button>
+          <button class="btn-filter" (click)="toggleFilter()">Filter Jobs</button>
+        </div>
+      </div>
+  
+      <!-- Job Listings -->
+      <div class="job-listings">
+        <div class="job-card" *ngFor="let job of filteredJobs">
+          <div class="job-header">
+            <div class="job-title-info">
+              <h2>{{ job.title }}</h2>
+              <div class="company">{{ job.company }}</div>
+              <div class="location">{{ job.location }}</div>
+              <div class="salary">{{ job.salaryRange }}</div>
+            </div>
+            <div class="star-icon" [class.starred]="job.starred" (click)="toggleStar(job)">★</div>
+          </div>
+          
+          <div class="job-description">
+            {{ job.description }}
+          </div>
+          
+          <div class="skills-container">
+            <div class="skill-tag" *ngFor="let skill of job.skills">{{ skill }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  

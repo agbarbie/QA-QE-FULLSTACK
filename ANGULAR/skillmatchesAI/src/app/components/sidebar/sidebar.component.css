@@ -1,0 +1,56 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #1b1b3a;
+    color: white;
+    position: fixed;
+    padding: 20px;
+    
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+  
+      img {
+        width: 50px;
+        border-radius: 50%;
+      }
+  
+      h2 {
+        font-size: 18px;
+      }
+    }
+  
+    nav ul {
+      list-style: none;
+      padding: 0;
+  
+      li {
+        margin: 15px 0;
+        
+        a {
+          color: white;
+          text-decoration: none;
+          font-size: 16px;
+          display: block;
+          padding: 10px;
+          border-radius: 5px;
+          
+          &:hover {
+            background-color: #3a3aff;
+          }
+        }
+      }
+    }
+  
+    button {
+      width: 100%;
+      padding: 10px;
+      background: red;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+  }
+  

@@ -1,0 +1,452 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #f5f5f5;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+}
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-jobs-button {
+  background-color: #5d5dfc;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.post-jobs-button:hover {
+  background-color: #3c3cff; /* Slightly darker blue on hover */
+}
+
+/* Sidebar Styles */
+.sidebar {
+  background-color: #FFAA00;
+  width: 170px;
+  min-height: 100vh;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.sidebar .logo {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 5px;
+}
+
+.sidebar h2 {
+  color: white;
+  font-size: 18px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  width: 100%;
+}
+
+.sidebar nav ul li {
+  padding: 10px 20px;
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+  margin-bottom: 5px;
+  transition: background-color 0.3s;
+}
+
+.sidebar nav ul li:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar nav ul li.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: bold;
+}
+
+.auth-buttons {
+  margin-top: auto;
+  margin-bottom: 150px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 15px;
+}
+
+.auth-buttons button {
+  margin: 5px 0;
+  padding: 8px 0;
+  border-radius: 20px;
+  border: none;
+  background-color: white;
+  color: #FFAA00;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.auth-buttons button:hover {
+  background-color: #f0f0f0;
+}
+
+.auth-buttons .logout-button {
+  background-color: #1a1a50;
+  color: white;
+}
+
+.auth-buttons .logout-button:hover {
+  background-color: #12123c;
+}
+
+/* User Profile Icon */
+.sidebar .user-profile {
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  margin-bottom: 10px;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  flex: 1;
+  margin-left: 170px;
+  padding: 20px;
+}
+
+.dashboard-header {
+  margin-bottom: 20px;
+}
+
+.dashboard-header h1 {
+  font-size: 32px;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.welcome-message {
+  color: white;
+  font-size: 16px;
+}
+
+/* Stats Section */
+.stats-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.stat-card {
+  background-color: #0a0a3d;
+  border-radius: 10px;
+  padding: 15px;
+  flex: 1;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h3 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-main {
+  display: flex;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.stat-description {
+  font-size: 14px;
+  color: #bbb;
+  margin-top: 5px;
+}
+
+/* Main Content */
+.main-content {
+  background-color: #0a0a3d;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tabs {
+  display: flex;
+  background-color: #0a0a3d;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 15px 20px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  flex: 1;
+}
+
+.tab-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tab-button.active {
+  background-color: #4046ff;
+  font-weight: bold;
+}
+
+.tab-content {
+  padding: 20px;
+}
+
+/* Candidates Section */
+.candidates-section {
+  color: white;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  font-size: 16px;
+}
+
+.section-tabs {
+  display: flex;
+}
+
+.section-tab {
+  background: none;
+  border: none;
+  padding: 8px 15px;
+  color: white;
+  cursor: pointer;
+  border-radius: 20px;
+  margin-left: 10px;
+}
+
+.section-tab.active {
+  background-color: #333;
+}
+
+.active-jobs-section h3 {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.candidate-listings {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.candidate-card {
+  background-color: #111143;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.candidate-info {
+  flex: 1;
+}
+
+.candidate-name {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.candidate-position {
+  color: #bbb;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.candidate-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.skill-tag {
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+.match-badge {
+  display: inline-block;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.match-badge.high {
+  background-color: #4CAF50;
+}
+
+.match-badge.medium {
+  background-color: #FFC107;
+}
+
+.match-badge.low {
+  background-color: #F44336;
+}
+
+.candidate-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.view-profile-button, .contact-button {
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.view-profile-button {
+  background-color: #151580;
+  color: white;
+}
+
+.contact-button {
+  background-color: #FFAA00;
+  color: black;
+}
+
+.view-profile-button:hover {
+  background-color: #0c0c50;
+}
+
+.contact-button:hover {
+  background-color: #e69a00;
+}
+
+.view-candidates-button {
+  background-color: #4046ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.view-candidates-button:hover {
+  background-color: #3339d6;
+}
+
+/* Overall Layout */
+body {
+  background-color: #151580;
+}
+
+.dashboard-container {
+  background-color: #151580;
+}
+
+/* Post Jobs Button */
+.post-jobs-button {
+  background-color: #4046ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  float: right;
+}
+
+.post-jobs-button:hover {
+  background-color: #3339d6;
+}
+
+/* Tab Styles */
+.section-tabs {
+  background-color: #222;
+  border-radius: 25px;
+  padding: 3px;
+}
+
+.section-tab {
+  border-radius: 25px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+  }
+  
+  .sidebar h2 {
+    display: none;
+  }
+  
+  .dashboard-container {
+    margin-left: 70px;
+  }
+  
+  .stats-section {
+    flex-direction: column;
+  }
+  
+  .candidate-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .candidate-actions {
+    width: 100%;
+    margin-top: 15px;
+  }
+}

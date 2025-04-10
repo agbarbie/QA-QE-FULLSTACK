@@ -1,0 +1,79 @@
+<div class="analytics-container">
+  <h1>Analytics</h1>
+  
+  <div class="analytics-section">
+    <h2>Hiring Analytics</h2>
+    
+    <div class="analytics-grid">
+      <!-- Match Quality Section -->
+      <div class="analytics-card">
+        <h3>Candidates Match Qualities</h3>
+        <p class="subtitle">Match quality by job positions</p>
+        
+        <div class="match-quality-header">
+          <span>Position</span>
+          <span>Excellent</span>
+          <span>Good</span>
+          <span>Average</span>
+        </div>
+        
+        <div class="match-quality-row" *ngFor="let item of matchQualityData">
+          <span>{{ item.position }}</span>
+          <span>{{ item.excellent }}</span>
+          <span>{{ item.good }}</span>
+          <span>{{ item.average }}</span>
+        </div>
+        
+        <div class="match-legend">
+          <div><span class="legend-dot excellent"></span> Excellent Match (90%+)</div>
+          <div><span class="legend-dot good"></span> Good Match (75-89%)</div>
+          <div><span class="legend-dot average"></span> Average Match (60-74%)</div>
+        </div>
+
+        <!-- New View Candidates Button -->
+        <button class="view-candidates-btn" (click)="navigateTo('/candidates')">
+          View Matching Candidates
+          <svg class="btn-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Hiring Activity Section -->
+      <div class="analytics-card">
+        <h3>Hiring Activity</h3>
+        <p class="subtitle">Applications and Hires overtime</p>
+        
+        <div class="hiring-activity-chart">
+          <div class="chart-placeholder">
+            <div class="chart-line applications"></div>
+            <div class="chart-line interviews"></div>
+            <div class="chart-line hires"></div>
+          </div>
+          
+          <div class="chart-legend">
+            <div><span class="legend-line applications"></span> applications</div>
+            <div><span class="legend-line interviews"></span> Interviews</div>
+            <div><span class="legend-line hires"></span> hires</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Skill Gap Analysis Section -->
+      <div class="analytics-card">
+        <h3>Skill Gap Analysis</h3>
+        <p class="subtitle">Most in-demand skills vs. available talent</p>
+        
+        <div class="skill-gap-list">
+          <div class="skill-item" *ngFor="let skill of skillGapData">
+            <div class="skill-name">{{ skill.skill }}</div>
+            <div class="skill-details">
+              <div>Market Demand: {{ skill.demand }}</div>
+              <div>Available talent pool: {{ skill.talentPool }}%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

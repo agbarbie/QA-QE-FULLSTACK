@@ -1,0 +1,19 @@
+<div class="login-container">
+  <h1>Login to SkillMatch AI</h1>
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" class="form-control" name="email" [(ngModel)]="loginModel.email" required />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" class="form-control" name="password" [(ngModel)]="loginModel.password" required />
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+    </div>
+  </form>
+  <p class="redirect">
+    Don't have an account? <a routerLink="/signup">Sign Up</a>
+  </p>
+</div>
